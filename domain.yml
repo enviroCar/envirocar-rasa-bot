@@ -1,4 +1,4 @@
-version: "2.0"
+version: "3.1"
 
 intents:
   - greet
@@ -25,6 +25,9 @@ responses:
   
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+  utter_did_that_help:
+  - text: "did that help?"
 
 
 session_config:
