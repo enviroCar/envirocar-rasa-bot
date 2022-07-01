@@ -55,7 +55,3 @@ But here are some of the common apis to use:
 **GET**: http://localhost:5005/version no body needed
 
 You could also explore the [apis with postman via video](https://www.youtube.com/watch?v=usHTraJTPyQ&list=PL75e0qA87dlHogEVKnBJLhqyaZKDg2f0W).  
-
-## 🛡️ License
-
-The repository is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for more information.
