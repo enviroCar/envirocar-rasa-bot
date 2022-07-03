@@ -28,3 +28,19 @@ stories:
   - action: utter_did_that_help
   - intent: deny
   - action: utter_goodbye
+
+- story: start recording
+  steps:
+  - intent: main_ui_recording
+  - action: utter_affirm
+
+- story: stop recording
+  steps:
+  - intent: main_ui_recording
+  - action: utter_affirm
+
+
+- story: tell about envirocar
+  steps:
+  - intent: envirocar_info
+  - action: utter_envirocar_info
