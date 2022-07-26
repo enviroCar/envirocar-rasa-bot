@@ -92,21 +92,30 @@ nlu:
 
   - intent: main_ui_recording
     examples: |
-      - I want to [start](recording_action) recording
+      - I want to [start](recording_start_action) recording
       - recording
-      - can you [start](recording_action) recording
-      - [begin](recording_action) recording
-      - can you [stop](recording_action) recording
-      - [finish](recording_action) recording
+      - can you [start](recording_start_action) recording
+      - [set up](recording_start_action) record
+      - can you [stop](recording_stop_action) recording
+      - [close](recording_stop_action) recording
 
-  - lookup: recording_action
+  - lookup: recording_start_action
     examples: |
       - start
       - begin
+      - set up
+
+  - lookup: recording_stop_action
+    examples: |
       - stop
       - end
       - finish
       - over
+      - close
+      - shut
+      - shutdown
+      
+   
 
   - intent: envirocar_info
     examples: |
