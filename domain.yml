@@ -1,44 +1,55 @@
 version: "2.0"
 
 intents:
-  - greet
-  - goodbye
   - affirm
+  - bot_challenge
   - deny
+  - envirocar_info
+  - goodbye
+  - greet
+  - main_ui_recording
   - mood_great
   - mood_unhappy
-  - bot_challenge
-  - main_ui_recording
-  - envirocar_info
 
 entities:
-- recording_action
+  - recording_stop_action
+  - recording_start_action
+
+actions:
+  - action_hello_world
+  - action_start_recording
+  - action_stop_recording
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
+    - text: Hey! How are you?
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
+    - text: "Here is something to cheer you up:"
+      image: https://i.imgur.com/nGF1K8f.jpg
   utter_happy:
-  - text: "Great, carry on!"
-
+    - text: Great, carry on!
   utter_goodbye:
-  - text: "Bye"
-  
+    - text: Bye
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
+    - text: I am a bot, powered by Rasa.
   utter_did_that_help:
-  - text: "did that help?"
-
+    - text: did that help?
   utter_affirm:
-  - text: "sure will do." # TODO add custom action for recording buttons rather than a text
-  
+    - text: sure will do.
+  utter_start_affirm:
+    - text: sure start I will.
+  utter_stop_affirm:
+    - text: sure stop I will.
+  utter_unspecified_recording_action:
+    - text: please specify recording action, e.g. to start say "start recording" or to stop track say "stop recording".
   utter_envirocar_info:
-  - text: "enviroCar Mobile is an Android application for collecting Extended Floating Car Data on smartphones. You can upload tracks to the enviroCar server, where the data is available for further analysis and use under the ODbL license. The data is also available on the enviroCar website for viewing and analysis"
+    - text: enviroCar Mobile is an Android application for collecting Extended Floating Car Data on smartphones. You can upload tracks to the enviroCar server, where the data is available for further analysis and use under the ODbL license. The data is also available on the enviroCar website for viewing and analysis.
+  utter_custom_response:
+    - custom:
+        query: "{query}"
+        reply: "{reply}"
+        action: "{action}"
+        data: "{data}"
 
 session_config:
   session_expiration_time: 60

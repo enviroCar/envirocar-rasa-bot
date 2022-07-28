@@ -114,11 +114,8 @@ nlu:
       - close
       - shut
       - shutdown
-      
-   
 
   - intent: envirocar_info
     examples: |
       - what is envirocar?
       - envirocar
-

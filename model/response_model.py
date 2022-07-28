@@ -10,5 +10,5 @@ class ResponseModel:
 
     query: str
     reply: str
-    action: ActionModel
     data: json
+    action: ActionModel = None
