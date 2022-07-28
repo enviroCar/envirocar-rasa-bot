@@ -1,2 +1,5 @@
-.rasa
-.models
+.rasa/
+models/
+.idea/
+Pipfile.lock
+story_graph.dot
