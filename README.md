@@ -36,7 +36,7 @@ rasa run --enable-api --port 5005
 ```
 - start `actions` server
 ```
-rasa run actions -p 5005
+rasa run actions -p 5055
 ```
 Once the server is up and running, test the bot directly via [``postman``](https://www.postman.com/)  
 Here's a [blog to explore the ``rasa`` apis with postman](https://rasa.com/blog/explore-rasa-apis-with-postman/)
