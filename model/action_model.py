@@ -8,4 +8,4 @@ class ActionModel:
     """data class for action model"""
 
     activity_class_name: str
-    activity_extras: ActivityExtrasModel
+    activity_extras: ActivityExtrasModel = None
