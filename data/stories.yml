@@ -1,0 +1,74 @@
+version: "3.1"
+
+stories:
+  - story: happy path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_great
+      - action: utter_happy
+
+  - story: sad path 1
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_unhappy
+      - action: utter_cheer_up
+      - action: utter_did_that_help
+      - intent: affirm
+      - action: utter_happy
+
+  - story: sad path 2
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_unhappy
+      - action: utter_cheer_up
+      - action: utter_did_that_help
+      - intent: deny
+      - action: utter_goodbye
+
+  - story: happy path -- start recording form
+    steps:
+      - intent: main_ui_recording
+        entities:
+          - recording_start_action
+      - action: start_recording_form
+      - active_loop: start_recording_form
+      - slot_was_set:
+          - requested_slot: recording_mode
+      - slot_was_set:
+          - recording_mode: true
+      - slot_was_set:
+          - requested_slot: gps
+      - slot_was_set:
+          - gps: true
+      - slot_was_set:
+          - requested_slot: car
+      - slot_was_set:
+          - car: true
+      - slot_was_set:
+          - requested_slot: bluetooth
+      - slot_was_set:
+          - bluetooth: true
+      - slot_was_set:
+          - requested_slot: obd_adapter
+      - slot_was_set:
+          - obd_adapter: true
+
+  - story: stop recording
+    steps:
+      - intent: main_ui_recording
+        entities:
+          - recording_stop_action
+      - action: action_stop_recording
+
+  - story: unspecified action for recording
+    steps:
+      - intent: main_ui_recording
+      - action: utter_unspecified_recording_action
+
+  - story: tell about envirocar
+    steps:
+      - intent: envirocar_info
+      - action: utter_envirocar_info
