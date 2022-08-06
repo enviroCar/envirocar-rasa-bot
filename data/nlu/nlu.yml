@@ -1,4 +1,4 @@
-version: "2.0"
+version: "3.1"
 
 nlu:
   - intent: greet
@@ -37,7 +37,7 @@ nlu:
       - indeed
       - of course
       - that sounds good
-      - correct
+      - correct 
 
   - intent: deny
     examples: |
@@ -119,3 +119,5 @@ nlu:
     examples: |
       - what is envirocar?
       - envirocar
+      
+  
