@@ -1,12 +1,13 @@
-import json
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
+from actions.start_recording_actions.checkGPS import checkGPS
 from model.action_model import ActionModel
-from model.activity_extras_model import ActivityExtrasModel
 from model.response_model import ResponseModel
+
+from rasa_sdk.events import FollowupAction
 
 
 class ActionStartRecording(Action):
@@ -17,7 +18,9 @@ class ActionStartRecording(Action):
         return "action_start_recording"
 
     @staticmethod
-    def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[Dict[Text, Any]]:
+    def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
+        Dict[Text, Any]
+    ]:
         message = tracker.latest_message.get("text")
         intent = tracker.latest_message['intent'].get('name')
         entities = tracker.latest_message['entities']
@@ -34,6 +37,9 @@ class ActionStartRecording(Action):
             }
         )
 
+        if checkGPS:
+            if
+
         dispatcher.utter_message(
             response="utter_custom_response",
             query=response.query,
@@ -44,5 +50,7 @@ class ActionStartRecording(Action):
             },
             data=response.data,
         )
+
+        FollowupAction("action_stop_recording")
 
         return []

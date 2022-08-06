@@ -38,6 +38,8 @@ responses:
     - text: sure will do.
   utter_start_affirm:
     - text: sure start I will.
+  utter_recording_started:
+    - text: recording started.
   utter_stop_affirm:
     - text: sure stop I will.
   utter_unspecified_recording_action:
