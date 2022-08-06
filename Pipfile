@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-rasa = "==2.8.1"
+rasa = "==3.2.5"
 dataclasses = "==0.6"
 
 [dev-packages]
