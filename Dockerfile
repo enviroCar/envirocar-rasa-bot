@@ -14,7 +14,7 @@ WORKDIR /app
 # upgrade pip version
 RUN pip install --no-cache-dir --upgrade pip
 
-RUN pip install rasa== 3.2.5
+RUN pip install rasa==3.2.5
 
 ADD config.yml config.yml
 ADD domain.yml domain.yml
