@@ -104,6 +104,7 @@ nlu:
       - start
       - begin
       - set up
+      - launch
 
   - lookup: recording_stop_action
     examples: |

@@ -23,7 +23,6 @@ services:
     restart: always
     volumes:
     - ./actions:/app/actions
-    - ./utils:/app/utils
     - ./model:/app/model
     command: ["rasa", "run", "actions"]
     ports:
