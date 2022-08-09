@@ -11,7 +11,7 @@ a# This file contains the different endpoints your bot can use.
 # https://rasa.com/docs/rasa/custom-actions
 
 action_endpoint:
-    url: "http://rasa-action-server/webhook"
+  url: "http://rasa-actions-server/webhook"
   # url: "http://localhost:5055/webhook"
 
 # Tracker store which is used to store the conversations.
