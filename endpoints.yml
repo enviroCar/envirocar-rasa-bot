@@ -1,4 +1,4 @@
-a# This file contains the different endpoints your bot can use.
+# This file contains the different endpoints your bot can use.
 
 # Server where the models are pulled from.
 # https://rasa.com/docs/rasa/model-storage#fetching-models-from-a-server
@@ -11,8 +11,8 @@ a# This file contains the different endpoints your bot can use.
 # https://rasa.com/docs/rasa/custom-actions
 
 action_endpoint:
-  url: "http://rasa-actions-server/webhook"
-  # url: "https://rasa-actions-server-cdhiraj40.cloud.okteto.net/webhook"
+  url: "https://rasa-actions-server-cdhiraj40.cloud.okteto.net/webhook"
+  # url: "http://localhost:5055/webhook"
 
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.
