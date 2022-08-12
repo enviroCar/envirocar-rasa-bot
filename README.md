@@ -34,6 +34,10 @@ rasa shell
 ```
 rasa run --enable-api --port 5005
 ```
+- start ``rasa server`` to use the custom channels
+```
+rasa run --credentials credentials.yml --enable-api --port 5005
+```
 - start `actions` server
 ```
 rasa run actions -p 5055
