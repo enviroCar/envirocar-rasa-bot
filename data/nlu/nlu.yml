@@ -34,10 +34,10 @@ nlu:
     examples: |
       - yes
       - y
-      - indeed
-      - of course
-      - that sounds good
-      - correct 
+      - sure
+      - yep
+      - yup
+      - do it
 
   - intent: deny
     examples: |
