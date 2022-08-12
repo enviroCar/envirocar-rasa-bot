@@ -12,20 +12,14 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: Activate start recording form
+- rule: Run a followup start action anytime the user affirms
+  steps:
+  - intent: affirm
+  - action: action_followup_start
+
+- rule: Start recording
   steps:
   - intent: main_ui_recording
     entities:
       - recording_start_action
-  - action: start_recording_form
-  - active_loop: start_recording_form
-
-- rule: Start recording
-  condition:
-    - active_loop: start_recording_form
-  steps:
-  - action: start_recording_form
-  - active_loop: null
-  - slot_was_set:
-      - requested_slot: null
   - action: action_start_recording

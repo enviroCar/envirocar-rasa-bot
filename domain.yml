@@ -13,72 +13,61 @@ entities:
   - recording_start_action
   - recording_stop_action
 actions:
-  - action_ask_bluetooth
-  - action_ask_car
-  - action_ask_gps
-  - action_ask_obd_adapter
-  - action_ask_recording_mode
   - action_hello_world
   - action_start_recording
   - action_stop_recording
   - validate_start_recording_form
-forms:
-  start_recording_form:
-    required_slots:
-      - recording_mode
-      - gps
-      - car
-      - bluetooth
-      - obd_adapter
+  - action_followup_start
+
 slots:
   recording_mode:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_text
+      - type: custom
         conditions:
           - active_loop: start_recording_form
             requested_slot: recording_mode
   gps:
-    type: text
+    type: bool
     influence_conversation: true
     mappings:
-      - type: from_text
+      - type: custom
         conditions:
           - active_loop: start_recording_form
             requested_slot: gps
   car:
-    type: text
+    type: bool
     influence_conversation: true
     mappings:
-      - type: from_text
+      - type: custom
         conditions:
           - active_loop: start_recording_form
             requested_slot: car
   bluetooth:
-    type: text
+    type: bool
     influence_conversation: true
     mappings:
-      - type: from_text
+      - type: custom
         conditions:
           - active_loop: start_recording_form
             requested_slot: bluetooth
   obd_adapter:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_text
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: obd_adapter
-  recording:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_text
+      - type: custom
         conditions:
           - active_loop: start_recording_form
-            requested_slot: recording
+            requested_slot: obd_adapter
+  recording_status:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: start_recording_form
+            requested_slot: recording_status
 responses:
   utter_greet:
     - text: Hey! How are you?
