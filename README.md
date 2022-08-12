@@ -44,14 +44,20 @@ Here's a [blog to explore the ``rasa`` apis with postman](https://rasa.com/blog/
 But here are some of the common apis to use:
 
 1. Testing the bot  
-**POST**: http://localhost:5005/webhooks/rest/webhook with the body
+Send a `POST` request to a particular channel http://localhost:5005/webhooks/<channel_name>/webhook with the body.
+This project provides 2 channels.<br/>   
+a. `rest` channel  
+<br/>This Channel is given by the rasa itself, and we cannot add extra functionalities to it. E.g. We cannot send extra data like `metadata` in the request.<br/>    
+b. `envirocar` channel  
+<br/>This Channel is a custom channel created to use the extra functionalities and send extra data like `metadata` or some `credentials` in the request.<br/>  
+Learn more about the [Custom Channels from here](https://www.google.com/search?q=custom+channel+rrasa&oq=custom+channel+rrasa&aqs=chrome..69i57.6391j0j1&sourceid=chrome&ie=UTF-8)
 ```
 {
     "message": <your message>
 }
 ```
 
-2. Check rasa version  
-**GET**: http://localhost:5005/version no body needed
+2. Check rasa version
+A `GET` request to http://localhost:5005/version without the body.
 
 You could also explore the [apis with postman via video](https://www.youtube.com/watch?v=usHTraJTPyQ&list=PL75e0qA87dlHogEVKnBJLhqyaZKDg2f0W).  
