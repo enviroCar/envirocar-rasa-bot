@@ -1,3 +1,4 @@
+import json
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
@@ -5,6 +6,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from model.action_model import ActionModel
+from model.metadata_type import MetadataType
 from model.recording_track.Bluetooth import Bluetooth
 from model.recording_track.Car import Car
 from model.recording_track.GPS import GPS
@@ -28,40 +30,71 @@ class ActionStartRecording(Action):
         intent = tracker.latest_message['intent'].get('name')
         entities = tracker.latest_message['entities']
 
-        # get all slots
-        recording_mode = tracker.get_slot("recording_mode")
-        gps = tracker.get_slot("gps")
-        car = tracker.get_slot("car")
-        bluetooth = tracker.get_slot("bluetooth")
-        obd_adapter = tracker.get_slot("bluetooth")
+        # get metadata from the latest message
+        metadata = tracker.latest_message.get("metadata")
+        print("metadata", metadata)
 
-        # GPS MODE
-        if gps == GPS.ON.value and recording_mode == RecordingMode.GPS.value \
-                and car == Car.Selected.value:
-            start_recording(dispatcher, message)
-            return [SlotSet("recording_mode", None), SlotSet("gps", None), SlotSet("car", None),
-                    SlotSet("bluetooth", None), SlotSet("obd_adapter", None), SlotSet("requested_slot", None)]
-        # OBD MODE
-        elif gps == GPS.ON.value and recording_mode == RecordingMode.OBD.value \
-                and car == Car.Selected.value and bluetooth == Bluetooth.ON.value \
-                and obd_adapter == OBDAdapter.Selected.value:
-            start_recording(dispatcher, message)
-            return [SlotSet("recording_mode", None), SlotSet("gps", None), SlotSet("car", None),
-                    SlotSet("bluetooth", None), SlotSet("obd_adapter", None), SlotSet("requested_slot", None)]
-        else:
-            return []
+        if MetadataType.RECORDING.value:
+            # get variables from metadata
+            recording_mode = metadata["recording_mode"]
+            gps = metadata["gps"]
+            car = metadata["car"]
+            bluetooth = metadata["bluetooth"]
+            obd_adapter = metadata["obd_adapter"]
+
+            # validating common data
+            if gps == GPS.OFF.value:
+                dispatcher.utter_message(text="GPS is not on! Do you want to turn it on?")
+                return [SlotSet("gps", False), SlotSet("recording_status", True)]
+
+            if car == Car.Not_Selected.value:
+                dispatcher.utter_message(text="Car is not selected! Do you want to select one?")
+                return [SlotSet("car", False), SlotSet("recording_status", True)]
+
+            # GPS MODE
+            if recording_mode == RecordingMode.GPS.value:
+                start_recording(dispatcher, message, intent, entities)
+                return [SlotSet("gps", True), SlotSet("car", True)]
+            else:
+                if bluetooth == Bluetooth.ON.value:
+                    if obd_adapter == OBDAdapter.Selected.value:
+                        start_recording(dispatcher, message, intent, entities)
+                        return [
+                            SlotSet("gps", True),
+                            SlotSet("car", True),
+                            SlotSet("bluetooth", True),
+                            SlotSet("obd_adapter", True)
+                        ]
+                    else:
+                        dispatcher.utter_message(text="OBD Adapter is not selected! Do you want to select one?")
+                        return [
+                            SlotSet("gps", True),
+                            SlotSet("car", True),
+                            SlotSet("bluetooth", True),
+                            SlotSet("obd_adapter", False),
+                            SlotSet("recording_status", True)
+                        ]
+                else:
+                    dispatcher.utter_message(text="Bluetooth is not on! Do you want to turn it on?")
+                    return [
+                        SlotSet("gps", True),
+                        SlotSet("car", True),
+                        SlotSet("bluetooth", False),
+                        SlotSet("recording_status", True)
+                    ]
+        return []
 
 
-def start_recording(dispatcher: CollectingDispatcher, message: str):
+def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str, entities: json) -> None:
     response = ResponseModel(
         query=message,
-        reply="sure start I will.",
+        reply="Sure, I will start recording",
         action=ActionModel(
             activity_class_name="org.envirocar.app.recording.RecordingService",
         ),
         data={
-            # "intent": intent,
-            # "entity": entities[0]['entity']
+            "intent": intent,
+            "entity": entities[0]['entity']
         }
     )
 
