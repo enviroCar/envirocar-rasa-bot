@@ -10,7 +10,7 @@ services:
     - ./actions:/app/actions
     - ./model:/app/model
     - ./data:/app/data
-    - .envirocar_channel:/app/envirocar_channel
+    - ./envirocar_channel:/app/envirocar_channel
     command: bash -c "rm -rf models/* && rasa train && rasa run --credentials credentials.yml --enable-api -p 5006 --cors \"*\" --debug"
     ports:
     - '5007:5006'
@@ -25,7 +25,7 @@ services:
     volumes:
     - ./actions:/app/actions
     - ./model:/app/model
-    - .envirocar_channel:/app/envirocar_channel
+    - ./envirocar_channel:/app/envirocar_channel
     command: ["rasa", "run", "actions"]
     ports:
     - '5055:5055'
