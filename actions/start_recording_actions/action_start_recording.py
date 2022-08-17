@@ -1,4 +1,4 @@
-model/recording_track/RecordingMetadata.pyimport json
+import json
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
