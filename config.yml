@@ -2,6 +2,11 @@ recipe: default.v1
 language: en
 
 pipeline:
+  - name: RegexEntityExtractor
+    case_sensitive: False
+    use_lookup_tables: True
+    use_regexes: True
+    "use_word_boundaries": True
   - name: WhitespaceTokenizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer

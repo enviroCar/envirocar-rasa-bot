@@ -26,7 +26,7 @@ stories:
       - intent: deny
       - action: utter_goodbye
 
-  - story: happy path -- start recording form
+  - story: happy path -- start recording
     steps:
       - intent: main_ui_recording
         entities:

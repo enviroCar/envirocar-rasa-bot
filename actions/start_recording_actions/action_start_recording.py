@@ -34,7 +34,7 @@ class ActionStartRecording(Action):
         metadata = tracker.latest_message.get("metadata")
         print("metadata", metadata)
 
-        if MetadataType.RECORDING.value:
+        if metadata["type"] == MetadataType.RECORDING.value:
             # get variables from metadata
             recording_mode = metadata["recording_mode"]
             gps = metadata["gps"]

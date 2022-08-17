@@ -2,5 +2,6 @@ import enum
 
 
 class MetadataType(enum.Enum):
-    RECORDING = "Recording"
-    CAR_SELECTION = "Car Selection"
+    RECORDING = "RECORDING"
+    CAR_SELECTION = "CAR_SELECTION"
+

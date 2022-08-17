@@ -2,5 +2,5 @@ import enum
 
 
 class RecordingMode(enum.Enum):
-    GPS = "GPS mode"
-    OBD = "OBD mode"
+    GPS = "GPS_MODE"
+    OBD = "OBD_MODE"
