@@ -1,4 +1,4 @@
-import json
+model/recording_track/RecordingMetadata.pyimport json
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
@@ -32,15 +32,17 @@ class ActionStartRecording(Action):
 
         # get metadata from the latest message
         metadata = tracker.latest_message.get("metadata")
+
+
         print("metadata", metadata)
 
         if metadata["type"] == MetadataType.RECORDING.value:
             # get variables from metadata
-            recording_mode = metadata["recording_mode"]
-            gps = metadata["gps"]
-            car = metadata["car"]
-            bluetooth = metadata["bluetooth"]
-            obd_adapter = metadata["obd_adapter"]
+            recording_mode = metadata["recordingMetadata"]["recording_mode"]
+            gps = metadata["recordingMetadata"]["gps"]
+            car = metadata["recordingMetadata"]["car"]
+            bluetooth = metadata["recordingMetadata"]["bluetooth"]
+            obd_adapter = metadata["recordingMetadata"]["obd_adapter"]
 
             # validating common data
             if gps == GPS.OFF.value:
