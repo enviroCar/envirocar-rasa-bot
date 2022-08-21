@@ -1,10 +1,8 @@
 from dataclasses import dataclass
-from dataclasses_json import dataclass_json
 
 from model.activity_extras_model import ActivityExtrasModel
 
 
-@dataclass_json
 @dataclass
 class ActionModel:
     """data class for action model"""
