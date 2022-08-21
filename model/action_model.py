@@ -8,8 +8,9 @@ class ActionModel:
     """data class for action model"""
 
     custom_event: str
-    activity_class_name: str
+    activity_class_name: str = None
     activity_extras: ActivityExtrasModel = None
 
     def as_dict(self):
-        return {'custom_event': self.custom_event, 'activity_class_name': self.activity_class_name, 'activity_extras': self.activity_extras}
+        return {'custom_event': self.custom_event, 'activity_class_name': self.activity_class_name,
+                'activity_extras': self.activity_extras}
