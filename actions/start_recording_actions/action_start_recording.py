@@ -1,5 +1,4 @@
 import json
-from dataclasses_json import dataclass_json
 from typing import Any, Text, Dict, List
 from model.recording_track.recording import Recording
 
@@ -116,6 +115,6 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
     dispatcher.utter_message(json_message={
         "query": response.query,
         "reply": response.reply,
-        "action": response.action.to_dict(),
+        "action": response.action.as_dict(),
         "data": response.data
     })
