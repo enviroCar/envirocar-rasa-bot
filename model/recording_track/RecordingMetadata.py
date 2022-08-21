@@ -9,4 +9,4 @@ class RecordingMetadata:
     car: bool
     bluetooth: bool
     obd_adapter: bool
-    className: str = None
+    isDashboardFragment: bool = False
