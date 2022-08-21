@@ -20,6 +20,14 @@ actions:
   - action_followup_start
 
 slots:
+  is_dashboard_fragment:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: start_recording_form
+            requested_slot: is_dashboard_fragment
   recording_mode:
     type: text
     influence_conversation: true
@@ -28,6 +36,14 @@ slots:
         conditions:
           - active_loop: start_recording_form
             requested_slot: recording_mode
+  location_permission:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: start_recording_form
+            requested_slot: location_permission
   gps:
     type: bool
     influence_conversation: true
@@ -44,6 +60,14 @@ slots:
         conditions:
           - active_loop: start_recording_form
             requested_slot: car
+  bluetooth_permission:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: start_recording_form
+            requested_slot: bluetooth_permission
   bluetooth:
     type: bool
     influence_conversation: true
@@ -60,22 +84,14 @@ slots:
         conditions:
           - active_loop: start_recording_form
             requested_slot: obd_adapter
-  is_dashboard_fragment:
+  recording_query:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
         conditions:
           - active_loop: start_recording_form
-            requested_slot: is_dashboard_fragment
-  recording_status:
-    type: bool
-    influence_conversation: true
-    mappings:
-      - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: recording_status
+            requested_slot: recording_query
 responses:
   utter_greet:
     - text: Hey! How are you?
