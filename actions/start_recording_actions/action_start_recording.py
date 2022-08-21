@@ -1,4 +1,5 @@
 import json
+from dataclasses_json import dataclass_json
 from typing import Any, Text, Dict, List
 from model.recording_track.recording import Recording
 
@@ -38,14 +39,14 @@ class ActionStartRecording(Action):
 
         # if the metadata type is recording and user is on dashboard fragment,
         if metadata["type"] == MetadataType.RECORDING.value and \
-                metadata["recordingMetadata"]["isDashboardFragment"] == True:
+                metadata["recordingMetadata"]["isDashboardFragment"]:
             # get variables from metadata
             recording_mode = metadata["recordingMetadata"]["recording_mode"]
             gps = metadata["recordingMetadata"]["gps"]
             car = metadata["recordingMetadata"]["car"]
             bluetooth = metadata["recordingMetadata"]["bluetooth"]
             obd_adapter = metadata["recordingMetadata"]["obd_adapter"]
-            isDashboardFragment = metadata["recordingMetadata"]["isDashboardFragment"]
+            is_dashboard_fragment = metadata["recordingMetadata"]["isDashboardFragment"]
 
             # validating common data
             if gps == GPS.OFF.value:
@@ -91,7 +92,7 @@ class ActionStartRecording(Action):
                         SlotSet("bluetooth", False),
                         SlotSet("recording_status", True)
                     ]
-        elif metadata["recordingMetadata"]["isDashboardFragment"] == False:
+        elif not metadata["recordingMetadata"]["isDashboardFragment"]:
             dispatcher.utter_message(
                 text="You are not on dashboard fragment! Do you want to go to dashboard fragment?")
             return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_status", True)]
@@ -104,6 +105,7 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
         reply="Sure, I will start recording",
         action=ActionModel(
             activity_class_name="org.envirocar.app.recording.RecordingService",
+            custom_event=Recording.START.value
         ),
         data={
             "intent": intent,
@@ -111,14 +113,9 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
         }
     )
 
-    dispatcher.utter_message(
-        response="utter_custom_response",
-        query=response.query,
-        reply=response.reply,
-        action={
-            "customEvent": Recording.START.value,
-            "activity_class_name": response.action.activity_class_name,
-            "activity_extras": response.action.activity_extras
-        },
-        data=response.data,
-    )
+    dispatcher.utter_message(json_message={
+        "query": response.query,
+        "reply": response.reply,
+        "action": response.action.to_dict(),
+        "data": response.data
+    })

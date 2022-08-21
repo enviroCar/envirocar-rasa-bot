@@ -55,65 +55,61 @@ def turn_on_gps(dispatcher: CollectingDispatcher) -> None:
     """
         Function to send response to turn on GPS.
     """
-    dispatcher.utter_message(
-        response="utter_custom_response",
-        query="",
-        reply="gps",
-        action={
-            "customEvent": RecordingRequirements.GPS.value,
+    dispatcher.utter_message(json_message={
+        "query": "response.query",
+        "reply": "gps",
+        "action": {
+            "custom_event": RecordingRequirements.GPS.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
-        data="",
-    )
+        "data": "response.data"
+    })
 
 
 def select_car(dispatcher: CollectingDispatcher) -> None:
     """
         Function to send response to Select car.
     """
-    dispatcher.utter_message(
-        response="utter_custom_response",
-        query="",
-        reply="car",
-        action={
-            "customEvent": RecordingRequirements.CAR.value,
+    dispatcher.utter_message(json_message={
+        "query": "response.query",
+        "reply": "car",
+        "action": {
+            "custom_event": RecordingRequirements.CAR.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
-        data="",
-    )
+        "data": "response.data"
+    })
 
 
 def turn_on_bluetooth(dispatcher: CollectingDispatcher) -> None:
     """
         Function to send response to turn on Bluetooth.
     """
-    dispatcher.utter_message(
-        response="utter_custom_response",
-        query="",
-        reply="bluetooth",
-        action={
-            "customEvent": RecordingRequirements.BLUETOOTH.value,
+    dispatcher.utter_message(json_message={
+        "query": "response.query",
+        "reply": "bluetooth",
+        "action": {
+            "custom_event": RecordingRequirements.BLUETOOTH.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
-        data="",
-    )
+        "data": "response.data"
+    })
 
 
 def select_obd_adapter(dispatcher: CollectingDispatcher) -> None:
     """
         Function to send response to Select OBD Adapter.
     """
-    dispatcher.utter_message(
-        response="utter_custom_response",
-        query="",
-        reply="OBD Adapter",
-        action={
-            "customEvent": RecordingRequirements.OBD.value,
+    dispatcher.utter_message(json_message={
+        "query": "response.query",
+        "reply": "obd_adapter",
+        "action": {
+            "custom_event": RecordingRequirements.OBD.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
-        data="",
-    )
+        "data": "response.data"
+    })
