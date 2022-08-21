@@ -1,5 +1,6 @@
 import json
 from typing import Any, Text, Dict, List
+from model.recording_track.recording import Recording
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
@@ -33,24 +34,28 @@ class ActionStartRecording(Action):
         # get metadata from the latest message
         metadata = tracker.latest_message.get("metadata")
 
-
         print("metadata", metadata)
 
-        if metadata["type"] == MetadataType.RECORDING.value:
+        # if the metadata type is recording and user is on dashboard fragment,
+        if metadata["type"] == MetadataType.RECORDING.value and \
+                metadata["recordingMetadata"]["isDashboardFragment"] == True:
             # get variables from metadata
             recording_mode = metadata["recordingMetadata"]["recording_mode"]
             gps = metadata["recordingMetadata"]["gps"]
             car = metadata["recordingMetadata"]["car"]
             bluetooth = metadata["recordingMetadata"]["bluetooth"]
             obd_adapter = metadata["recordingMetadata"]["obd_adapter"]
+            isDashboardFragment = metadata["recordingMetadata"]["isDashboardFragment"]
 
             # validating common data
             if gps == GPS.OFF.value:
-                dispatcher.utter_message(text="GPS is not on! Do you want to turn it on?")
+                dispatcher.utter_message(
+                    text="GPS is not on! Do you want to turn it on?")
                 return [SlotSet("gps", False), SlotSet("recording_status", True)]
 
             if car == Car.Not_Selected.value:
-                dispatcher.utter_message(text="Car is not selected! Do you want to select one?")
+                dispatcher.utter_message(
+                    text="Car is not selected! Do you want to select one?")
                 return [SlotSet("car", False), SlotSet("recording_status", True)]
 
             # GPS MODE
@@ -68,7 +73,8 @@ class ActionStartRecording(Action):
                             SlotSet("obd_adapter", True)
                         ]
                     else:
-                        dispatcher.utter_message(text="OBD Adapter is not selected! Do you want to select one?")
+                        dispatcher.utter_message(
+                            text="OBD Adapter is not selected! Do you want to select one?")
                         return [
                             SlotSet("gps", True),
                             SlotSet("car", True),
@@ -77,13 +83,18 @@ class ActionStartRecording(Action):
                             SlotSet("recording_status", True)
                         ]
                 else:
-                    dispatcher.utter_message(text="Bluetooth is not on! Do you want to turn it on?")
+                    dispatcher.utter_message(
+                        text="Bluetooth is not on! Do you want to turn it on?")
                     return [
                         SlotSet("gps", True),
                         SlotSet("car", True),
                         SlotSet("bluetooth", False),
                         SlotSet("recording_status", True)
                     ]
+        elif metadata["recordingMetadata"]["isDashboardFragment"] == False:
+            dispatcher.utter_message(
+                text="You are not on dashboard fragment! Do you want to go to dashboard fragment?")
+            return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_status", True)]
         return []
 
 
@@ -105,6 +116,7 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
         query=response.query,
         reply=response.reply,
         action={
+            "customEvent": Recording.START.value,
             "activity_class_name": response.action.activity_class_name,
             "activity_extras": response.action.activity_extras
         },

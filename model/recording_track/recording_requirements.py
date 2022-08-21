@@ -3,6 +3,6 @@ import enum
 
 class RecordingRequirements(enum.Enum):
     GPS = "GPS"
-    BLUEETOOTH = "BLUETOOTH"
+    BLUETOOTH = "BLUETOOTH"
     CAR = "CAR"
     OBD = "OBD"

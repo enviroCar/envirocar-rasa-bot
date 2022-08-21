@@ -1,4 +1,5 @@
 from typing import Any, Text, Dict, List
+from model.recording_track.recording_requirements import RecordingRequirements
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import AllSlotsReset
@@ -29,6 +30,7 @@ class ActionFollowupStart(Action):
     def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs):
         # get all slots
         recording_status = tracker.get_slot("recording_status")
+        is_dashboard_fragment = tracker.get_slot("is_dashboard_fragment")
         gps = tracker.get_slot("gps")
         car = tracker.get_slot("car")
         bluetooth = tracker.get_slot("bluetooth")
@@ -41,7 +43,7 @@ class ActionFollowupStart(Action):
                 turn_on_gps(dispatcher)
             elif car == Car.Not_Selected.value:
                 select_car(dispatcher)
-            elif bluetooth == Bluetooth.ON.value:
+            elif bluetooth == Bluetooth.OFF.value:
                 turn_on_bluetooth(dispatcher)
             else:
                 select_obd_adapter(dispatcher)
@@ -58,6 +60,7 @@ def turn_on_gps(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="gps",
         action={
+            "customEvent": RecordingRequirements.GPS.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
@@ -74,6 +77,7 @@ def select_car(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="car",
         action={
+            "customEvent": RecordingRequirements.CAR.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
@@ -90,6 +94,7 @@ def turn_on_bluetooth(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="bluetooth",
         action={
+            "customEvent": RecordingRequirements.BLUETOOTH.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
@@ -106,6 +111,7 @@ def select_obd_adapter(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="OBD Adapter",
         action={
+            "customEvent": RecordingRequirements.OBD.value,
             "activity_class_name": "",
             "activity_extras": ""
         },
