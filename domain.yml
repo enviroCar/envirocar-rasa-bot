@@ -60,6 +60,14 @@ slots:
         conditions:
           - active_loop: start_recording_form
             requested_slot: obd_adapter
+  is_dashboard_fragment:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: start_recording_form
+            requested_slot: is_dashboard_fragment
   recording_status:
     type: bool
     influence_conversation: true
