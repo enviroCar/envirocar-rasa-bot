@@ -33,7 +33,7 @@ stories:
           - recording_start_action
       - action: action_start_recording
 
-  - story: stop recording
+  - story: happy path -- stop recording
     steps:
       - intent: main_ui_recording
         entities:

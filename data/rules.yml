@@ -23,3 +23,10 @@ rules:
     entities:
       - recording_start_action
   - action: action_start_recording
+
+- rule: Stop recording
+  steps:
+  - intent: main_ui_recording
+    entities:
+      - recording_stop_action
+  - action: action_stop_recording
