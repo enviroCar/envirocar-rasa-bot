@@ -1,16 +1,16 @@
-from typing import Any, Text, Dict, List
+from typing import Any, Text, Dict
 
 from model.action_model import ActionModel
-from model.recording_track.recording import Recording
-from model.recording_track.recording_requirements import RecordingRequirements
+from model.next_action import NextAction
+from enums.recording.recording_requirements import RecordingRequirements
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 
-from model.recording_track.Bluetooth import Bluetooth
-from model.recording_track.Car import Car
-from model.recording_track.GPS import GPS
+from enums.recording.bluetooth import Bluetooth
+from enums.recording.car import Car
+from enums.recording.gps import GPS
 from model.response_model import ResponseModel
 
 
@@ -47,9 +47,9 @@ class ActionFollowupStart(Action):
 
         # check if recording query is true
         if recording_query:
-            if not is_dashboard_fragment:
-                navigate_dashboard_fragment(dispatcher)
-            elif not location_permission:
+            # if not is_dashboard_fragment:
+            #     navigate_dashboard_fragment(dispatcher)
+            if not location_permission:
                 grant_location_permission(dispatcher)
             elif gps == GPS.OFF.value:
                 turn_on_gps(dispatcher)
@@ -73,7 +73,8 @@ def navigate_dashboard_fragment(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="navigating to dashboard fragment",
         action=ActionModel(
-            custom_event=RecordingRequirements.DASHBOARD.value
+            custom_event=RecordingRequirements.DASHBOARD.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={}
     )
@@ -93,7 +94,8 @@ def grant_location_permission(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please grant location permission",
         action=ActionModel(
-            custom_event=RecordingRequirements.LOCATION_PERMS.value
+            custom_event=RecordingRequirements.LOCATION_PERMS.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={}
     )
@@ -113,8 +115,8 @@ def turn_on_gps(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please turn on GPS",
         action=ActionModel(
-            custom_event=RecordingRequirements.GPS.value
-        ),
+            custom_event=RecordingRequirements.GPS.value,
+            next_action=NextAction.RECOGNITION.value),
         data={}
     )
     dispatcher.utter_message(json_message={
@@ -133,7 +135,8 @@ def select_car(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please Select Car",
         action=ActionModel(
-            custom_event=RecordingRequirements.CAR.value
+            custom_event=RecordingRequirements.CAR.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={}
     )
@@ -153,7 +156,8 @@ def grant_bluetooth_permission(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please grant Bluetooth permissions",
         action=ActionModel(
-            custom_event=RecordingRequirements.BLUETOOTH_PERMS.value
+            custom_event=RecordingRequirements.BLUETOOTH_PERMS.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={}
     )
@@ -173,7 +177,8 @@ def turn_on_bluetooth(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please turn on Bluetooth",
         action=ActionModel(
-            custom_event=RecordingRequirements.BLUETOOTH.value
+            custom_event=RecordingRequirements.BLUETOOTH.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={}
     )
@@ -193,7 +198,8 @@ def select_obd_adapter(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please select OBD Devices",
         action=ActionModel(
-            custom_event=RecordingRequirements.OBD.value
+            custom_event=RecordingRequirements.OBD.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={}
     )

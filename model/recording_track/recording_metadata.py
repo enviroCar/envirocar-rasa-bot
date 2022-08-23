@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class RecordingMetadata:
     """data class for recording metadata model"""

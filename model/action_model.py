@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from model.activity_extras_model import ActivityExtrasModel
+from model.next_action import NextAction
 
 
 @dataclass
@@ -8,6 +9,7 @@ class ActionModel:
     """data class for action model"""
 
     custom_event: str
+    next_action: NextAction
     activity_class_name: str = None
     activity_extras: ActivityExtrasModel = None
 

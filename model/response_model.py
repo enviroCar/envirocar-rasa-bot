@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 import json
-
 from model.action_model import ActionModel
 
 

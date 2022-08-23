@@ -1,20 +1,21 @@
 import json
 from typing import Any, Text, Dict, List
 
-from model.recording_track.RecordingState import RecordingState
-from model.recording_track.recording import Recording
+from enums.recording.recording import Recording
+from model.next_action import NextAction
+from enums.recording.RecordingState import RecordingState
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from model.action_model import ActionModel
-from model.metadata_type import MetadataType
-from model.recording_track.Bluetooth import Bluetooth
-from model.recording_track.Car import Car
-from model.recording_track.GPS import GPS
-from model.recording_track.OBDAdapter import OBDAdapter
-from model.recording_track.RecordingMode import RecordingMode
+from enums.recording.metadata_type import MetadataType
+from enums.recording.bluetooth import Bluetooth
+from enums.recording.car import Car
+from enums.recording.gps import GPS
+from enums.recording.OBD_adapter import OBDAdapter
+from enums.recording.RecordingMode import RecordingMode
 from model.response_model import ResponseModel
 
 
@@ -173,7 +174,8 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
         reply="Sure, I will start recording",
         action=ActionModel(
             activity_class_name="org.envirocar.app.recording.RecordingService",
-            custom_event=Recording.START.value
+            custom_event=Recording.START.value,
+            next_action=NextAction.RECOGNITION.value
         ),
         data={
             "intent": intent,

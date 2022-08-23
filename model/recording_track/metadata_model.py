@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 
-from model.recording_track.RecordingMetadata import RecordingMetadata
+from model.recording_track.recording_metadata import RecordingMetadata
+
+
 @dataclass
-class MatadataModel:
+class MetadataModel:
     """data class for metadata model"""
 
     type: str
     recordingMetadata: RecordingMetadata = None
-
-
-
