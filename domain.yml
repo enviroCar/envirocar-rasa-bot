@@ -9,9 +9,12 @@ intents:
   - main_ui_recording
   - mood_great
   - mood_unhappy
+  - select_car
+  - detailed_car_selection
 entities:
   - recording_start_action
   - recording_stop_action
+  - fuel_type
 actions:
   - action_start_recording
   - action_stop_recording
@@ -117,6 +120,8 @@ responses:
     - text: sure start I will.
   utter_stop_affirm:
     - text: sure stop I will.
+  utter_car:
+    - text: coolio, will select.
   utter_unspecified_recording_action:
     - text: please specify recording action, e.g. to start say "start recording" or to stop track say "stop recording".
   utter_envirocar_info:

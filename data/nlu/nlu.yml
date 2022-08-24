@@ -116,6 +116,81 @@ nlu:
       - shut
       - shutdown
 
+  - intent: select_car
+    examples: |
+      - i'd like to select a car
+      - i'd like to choose a car
+      - i'd like to pick a car
+      - i'd like to get a car
+      - i'd like to select my car
+      - i'd like to choose my car
+      - i'd like to pick my car
+      - i'd like to get my car
+      - i select a car
+      - i choose a car
+      - i want a car
+      - i pick a car
+      - can i select a car
+      - can i choose a car
+      - can i pick a car
+      - can i get a car
+      - I'm interested in selecting a car
+      - I'm interested in choosing a car
+      - I'm interested in picking a car
+      - I'm interested in getting a car
+      - i want to select a car
+      - i want to choose a car
+      - i want to pick a car
+      - i want to get a car
+      - select car
+      - choose car
+      - pick car
+      - get car
+      - please select car
+      - please choose car
+      - please pick car
+      - please get car
+
+  - intent: detailed_car_selection
+    examples: |
+      - i'd like a [gasoline](fuel_type) car
+      - i want to select a [diesel](fuel_type) car
+      - [electric](fuel_type) car
+      - [natural gas](fuel_type)
+      - [hybrid](fuel_type)
+      - [electric](fuel_type)
+      - [diesel](fuel_type)
+      - give me a [natural gas](fuel_type) car
+      - i want a [gasoline](fuel_type) car
+      - [diesel](fuel_type)
+      - i want a [electric](fuel_type) car
+      - i want a [hybrid](fuel_type) car
+      - i want a [natural gas](fuel_type) car
+      - select [natural gas](fuel_type) car
+      - select [diesel](fuel_type) car
+      - select [electric](fuel_type) car
+      - can you select [hybrid](fuel_type) car
+      - can you select [natural gas](fuel_type) car
+      - please select [diesel](fuel_type) car
+      - choose [electric](fuel_type) car
+      - choose [gasoline](fuel_type) car please
+
+  - lookup: fuel_type
+    examples: |
+      - gasoline
+      - diesel
+      - electric
+      - natural gas
+      - hybrid
+
+  - synonym: select
+    examples: |
+      - select
+      - choose
+      - pick
+      - get
+      - hybrid
+
   - intent: envirocar_info
     examples: |
       - what is envirocar?
