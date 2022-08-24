@@ -14,7 +14,7 @@ from enums.recording.gps import GPS
 from model.response_model import ResponseModel
 
 
-class ActionFollowupStart(Action):
+class ActionFollowup(Action):
     """
         This is the action that is called when the user affirms to start something.
         1. happy path
@@ -27,13 +27,13 @@ class ActionFollowupStart(Action):
 
     @staticmethod
     def name(**kwargs) -> Text:
-        return "action_followup_start"
+        return "action_followup"
 
     @staticmethod
     def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs):
 
         # get all slots
-        recording_query = tracker.get_slot("recording_query")
+        recording_start_query = tracker.get_slot("recording_start_query")
         location_permission = tracker.get_slot("location_permission")
         is_dashboard_fragment = tracker.get_slot("is_dashboard_fragment")
         gps = tracker.get_slot("gps")
@@ -42,11 +42,11 @@ class ActionFollowupStart(Action):
         bluetooth = tracker.get_slot("bluetooth")
         obd_adapter = tracker.get_slot("bluetooth")
 
-        print("slots:", recording_query, is_dashboard_fragment,
+        print("slots:", recording_start_query, is_dashboard_fragment,
               location_permission, gps, car, bluetooth, obd_adapter)
 
         # check if recording query is true
-        if recording_query:
+        if recording_start_query:
             # if not is_dashboard_fragment:
             #     navigate_dashboard_fragment(dispatcher)
             if not location_permission:

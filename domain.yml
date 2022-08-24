@@ -13,11 +13,10 @@ entities:
   - recording_start_action
   - recording_stop_action
 actions:
-  - action_hello_world
   - action_start_recording
   - action_stop_recording
   - validate_start_recording_form
-  - action_followup_start
+  - action_followup
 
 slots:
   is_dashboard_fragment:
@@ -84,14 +83,22 @@ slots:
         conditions:
           - active_loop: start_recording_form
             requested_slot: obd_adapter
-  recording_query:
+  recording_start_query:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
         conditions:
           - active_loop: start_recording_form
-            requested_slot: recording_query
+            requested_slot: recording_start_query
+  recording_stop_query:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: start_recording_form
+            requested_slot: recording_stop_query
 responses:
   utter_greet:
     - text: Hey! How are you?
