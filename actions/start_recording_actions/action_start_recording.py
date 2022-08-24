@@ -60,13 +60,13 @@ class ActionStartRecording(Action):
                                 text="GPS is not on! Do you want to turn it on?")
                             return [SlotSet("location_permission", True), SlotSet("is_dashboard_fragment", True),
                                     SlotSet("gps", False),
-                                    SlotSet("recording_query", True)]
+                                    SlotSet("recording_start_query", True)]
 
                         if car == Car.Not_Selected.value:
                             dispatcher.utter_message(
                                 text="Car is not selected! Do you want to select one?")
                             return [SlotSet("location_permission", True), SlotSet("is_dashboard_fragment", True),
-                                    SlotSet("car", False), SlotSet("recording_query", True)]
+                                    SlotSet("car", False), SlotSet("recording_start_query", True)]
 
                         # GPS MODE
                         if recording_mode == RecordingMode.GPS.value:
@@ -76,7 +76,7 @@ class ActionStartRecording(Action):
                                 SlotSet("is_dashboard_fragment", True),
                                 SlotSet("gps", True),
                                 SlotSet("car", True),
-                                SlotSet("recording_query", False)
+                                SlotSet("recording_start_query", False)
                             ]
                         else:
                             if metadata["recordingMetadata"]["has_bluetooth_permission"]:
@@ -91,7 +91,7 @@ class ActionStartRecording(Action):
                                             SlotSet("bluetooth_permission", True),
                                             SlotSet("bluetooth", True),
                                             SlotSet("obd_adapter", True),
-                                            SlotSet("recording_query", False)
+                                            SlotSet("recording_start_query", False)
                                         ]
                                     else:
                                         dispatcher.utter_message(
@@ -104,7 +104,7 @@ class ActionStartRecording(Action):
                                             SlotSet("bluetooth_permission", True),
                                             SlotSet("bluetooth", True),
                                             SlotSet("obd_adapter", False),
-                                            SlotSet("recording_query", True)
+                                            SlotSet("recording_start_query", True)
                                         ]
                                 else:
                                     dispatcher.utter_message(
@@ -116,7 +116,7 @@ class ActionStartRecording(Action):
                                         SlotSet("car", True),
                                         SlotSet("bluetooth_permission", True),
                                         SlotSet("bluetooth", False),
-                                        SlotSet("recording_query", True)
+                                        SlotSet("recording_start_query", True)
                                     ]
                             else:
                                 dispatcher.utter_message(
@@ -128,7 +128,7 @@ class ActionStartRecording(Action):
                                     SlotSet("car", True),
                                     SlotSet("bluetooth_permission", False),
                                     SlotSet("bluetooth", False),
-                                    SlotSet("recording_query", True)
+                                    SlotSet("recording_start_query", True)
                                 ]
                     else:
                         dispatcher.utter_message(
@@ -136,36 +136,36 @@ class ActionStartRecording(Action):
                         return [
                             SlotSet("is_dashboard_fragment", True),
                             SlotSet("location_permission", False),
-                            SlotSet("recording_query", True)
+                            SlotSet("recording_start_query", True)
                         ]
                 elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_RUNNING.value:
                     dispatcher.utter_message(
                         text="Recording is already started!")
-                    return [SlotSet("recording_query", False)]
+                    return [SlotSet("recording_start_query", False)]
                 elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_INIT.value:
                     dispatcher.utter_message(
                         text="Recording is starting, Please wait!")
-                    return [SlotSet("recording_query", False)]
+                    return [SlotSet("recording_start_query", False)]
                 else:
                     dispatcher.utter_message(
                         text="Wrong Recording state, Something went wrong!")
-                    return [SlotSet("recording_query", False)]
+                    return [SlotSet("recording_start_query", False)]
 
                     # dispatcher.utter_message(
                     #     text="Recording is already started! Navigating to recording screen(if not already there)")
-                    # return [SlotSet("recording_query", True)]
+                    # return [SlotSet("recording_start_query", True)]
 
                     # dispatcher.utter_message(
                     #     text="Recording is already started! Do you want to stop it?")
-                    # return [SlotSet("recording_query", True)]
+                    # return [SlotSet("recording_start_query", True)]
             else:
                 dispatcher.utter_message(
-                    text="You are not on dashboard fragment! Do you want to go to dashboard fragment?")
-                return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_query", True)]
+                    text="You are not on dashboard fragment! Please go to dashboard fragment to start recording.")
+                return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_start_query", True)]
         else:
             dispatcher.utter_message(
                 text="Something went wrong! Please try again!")
-            return [SlotSet("recording_query", False)]
+            return [SlotSet("recording_start_query", False)]
 
 
 def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str, entities: json) -> None:
@@ -175,7 +175,7 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
         action=ActionModel(
             activity_class_name="org.envirocar.app.recording.RecordingService",
             custom_event=Recording.START.value,
-            next_action=NextAction.RECOGNITION.value
+            next_action=NextAction.STANDBY.value
         ),
         data={
             "intent": intent,

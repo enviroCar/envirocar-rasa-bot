@@ -15,7 +15,7 @@ rules:
 - rule: Run a followup start action anytime the user affirms
   steps:
   - intent: affirm
-  - action: action_followup_start
+  - action: action_followup
 
 - rule: Start recording
   steps:

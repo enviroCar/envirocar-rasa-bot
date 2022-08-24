@@ -32,18 +32,20 @@ class ActionFollowup(Action):
     @staticmethod
     def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs):
 
-        # get all slots
-        recording_start_query = tracker.get_slot("recording_start_query")
-        location_permission = tracker.get_slot("location_permission")
-        is_dashboard_fragment = tracker.get_slot("is_dashboard_fragment")
-        gps = tracker.get_slot("gps")
-        car = tracker.get_slot("car")
-        bluetooth_permission = tracker.get_slot("bluetooth_permission")
-        bluetooth = tracker.get_slot("bluetooth")
-        obd_adapter = tracker.get_slot("bluetooth")
+        # get all slotss
+        slots = tracker.slots
 
-        print("slots:", recording_start_query, is_dashboard_fragment,
-              location_permission, gps, car, bluetooth, obd_adapter)
+        print("slotss:", slots)
+
+        recording_start_query = slots["recording_start_query"]
+        recording_stop_query = slots["recording_stop_query"]
+        location_permission = slots["location_permission"]
+        is_dashboard_fragment = slots["is_dashboard_fragment"]
+        gps = slots["gps"]
+        car = slots["car"]
+        bluetooth_permission = slots["bluetooth_permission"]
+        bluetooth = slots["bluetooth"]
+        obd_adapter = slots["obd_adapter"]
 
         # check if recording query is true
         if recording_start_query:
@@ -61,7 +63,6 @@ class ActionFollowup(Action):
                 turn_on_bluetooth(dispatcher)
             else:
                 select_obd_adapter(dispatcher)
-
         return [AllSlotsReset()]
 
 
