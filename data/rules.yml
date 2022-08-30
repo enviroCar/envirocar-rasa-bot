@@ -2,31 +2,47 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
 
-- rule: Run a followup start action anytime the user affirms
-  steps:
-  - intent: affirm
-  - action: action_followup
+  - rule: Run a followup start action anytime the user affirms
+    steps:
+      - intent: affirm
+      - action: action_followup
 
-- rule: Start recording
-  steps:
-  - intent: main_ui_recording
-    entities:
-      - recording_start_action
-  - action: action_start_recording
+  - rule: Start recording
+    steps:
+      - intent: main_ui_recording
+        entities:
+          - recording_start_action
+      - action: action_start_recording
 
-- rule: Stop recording
-  steps:
-  - intent: main_ui_recording
-    entities:
-      - recording_stop_action
-  - action: action_stop_recording
+  - rule: Stop recording
+    steps:
+      - intent: main_ui_recording
+        entities:
+          - recording_stop_action
+      - action: action_stop_recording
+
+  - rule: Activate Select Car Form
+    steps:
+      - intent: select_car
+      - action: select_car_form
+      - active_loop: select_car_form
+
+  - rule: Submit Select Car Form
+    condition:
+      - active_loop: select_car_form
+    steps:
+      - action: select_car_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_car
