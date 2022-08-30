@@ -18,7 +18,6 @@ entities:
 actions:
   - action_start_recording
   - action_stop_recording
-  - validate_start_recording_form
   - action_followup
 
 slots:
