@@ -18,8 +18,13 @@ entities:
 actions:
   - action_start_recording
   - action_stop_recording
-  - validate_start_recording_form
+  - validate_car_selection_form
   - action_followup
+
+forms:
+  car_selection_form:
+    required_slots:
+      - car_number
 
 slots:
   is_dashboard_fragment:
@@ -72,6 +77,11 @@ slots:
     influence_conversation: true
     mappings:
       - type: custom
+  car_number:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: detailed_car_selection
   select_car_iteration:
     type: float
     initial_value: 0.0
