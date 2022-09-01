@@ -18,6 +18,7 @@ entities:
 actions:
   - action_start_recording
   - action_stop_recording
+  - validate_start_recording_form
   - action_followup
 
 slots:
@@ -26,81 +27,68 @@ slots:
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: is_dashboard_fragment
   recording_mode:
     type: text
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: recording_mode
   location_permission:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: location_permission
   gps:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: gps
   car:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: car
   bluetooth_permission:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: bluetooth_permission
   bluetooth:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: bluetooth
   obd_adapter:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: obd_adapter
   recording_start_query:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: recording_start_query
   recording_stop_query:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
-        conditions:
-          - active_loop: start_recording_form
-            requested_slot: recording_stop_query
+  select_car_iteration:
+    type: float
+    initial_value: 0.0
+    min_value: 0.0
+    max_value: 100.0
+    mappings:
+      - type: custom
+  next_car:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+  previous_car:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
 responses:
   utter_greet:
     - text: Hey! How are you?
