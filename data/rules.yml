@@ -30,3 +30,19 @@ rules:
         entities:
           - recording_stop_action
       - action: action_stop_recording
+
+  - rule: Activate Select Car Form
+    steps:
+      - intent: select_car
+      - action: select_car_form
+      - active_loop: select_car_form
+
+  - rule: Submit Select Car Form
+    condition:
+      - active_loop: select_car_form
+    steps:
+      - action: select_car_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_car
