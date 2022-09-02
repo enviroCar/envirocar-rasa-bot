@@ -34,14 +34,21 @@ rules:
   - rule: Activate Select Car Form
     steps:
       - intent: select_car
-      - action: select_car_form
-      - active_loop: select_car_form
+      - action: car_selection_form
+      - active_loop: car_selection_form
+
+  - rule: Activate Select Car Form if intent `detailed_car_selection` is extracted outside form
+    condition:
+      - active_loop: null
+    steps:
+      - intent: detailed_car_selection
+      - action: action_detailed_car_selection
 
   - rule: Submit Select Car Form
     condition:
-      - active_loop: select_car_form
+      - active_loop: car_selection_form
     steps:
-      - action: select_car_form
+      - action: car_selection_form
       - active_loop: null
       - slot_was_set:
           - requested_slot: null

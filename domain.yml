@@ -14,11 +14,13 @@ intents:
 entities:
   - recording_start_action
   - recording_stop_action
-  - fuel_type
+  - car_selection_number
 actions:
   - action_start_recording
   - action_stop_recording
   - validate_car_selection_form
+  - action_ask_car_number
+  - action_detailed_car_selection
   - action_followup
 
 forms:
@@ -79,9 +81,13 @@ slots:
       - type: custom
   car_number:
     type: text
+    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: detailed_car_selection
+        entity: car_selection_number
+        conditions:
+            - active_loop: car_selection_form
+              requested_slot: car_number
   select_car_iteration:
     type: float
     initial_value: 0.0
@@ -89,16 +95,25 @@ slots:
     max_value: 100.0
     mappings:
       - type: custom
+        conditions:
+          - active_loop: car_selection_form
+            requested_slot: select_car_iteration
   next_car:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
+        conditions:
+          - active_loop: car_selection_form
+            requested_slot:  next_car
   previous_car:
     type: bool
     influence_conversation: true
     mappings:
       - type: custom
+        conditions:
+          - active_loop: car_selection_form
+            requested_slot:   previous_car
 responses:
   utter_greet:
     - text: Hey! How are you?

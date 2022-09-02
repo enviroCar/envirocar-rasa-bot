@@ -153,35 +153,27 @@ nlu:
 
   - intent: detailed_car_selection
     examples: |
-      - i'd like [first](car_number) car
-      - i'd like [second](car_number) car
-      - i'd like [third](car_number) car
-      - i want to select [first](car_number) car
-      - i want to select [second](car_number) car
-      - i want to select  [third](car_number) car
-      - [first](car_number) car
-      - [second](car_number) car
-      - [third](car_number) car
-      - i want [first](car_number) car
-      - i want [second](car_number) car
-      - i want [third](car_number) car
-      - select [first](car_number) car
-      - select [second](car_number) car
-      - select [third](car_number) car
-      - can you select [first](car_number) car
-      - can you select [second](car_number) car
-      - can you select [third](car_number) car
-      - please select [first](car_number) car
-      - choose [second](car_number) car
-      - choose [third](car_number) car please
-
-  - lookup: fuel_type
-    examples: |
-      - gasoline
-      - diesel
-      - electric
-      - natural gas
-      - hybrid
+      - i'd like [first](car_selection_number) car
+      - i'd like [second](car_selection_number) car
+      - i'd like [third](car_selection_number) car
+      - i want to select [first](car_selection_number) car
+      - i want to select [second](car_selection_number) car
+      - i want to select  [third](car_selection_number) car
+      - [first](car_selection_number) car
+      - [second](car_selection_number) car
+      - [third](car_selection_number) car
+      - i want [first](car_selection_number) car
+      - i want [second](car_selection_number) car
+      - i want [third](car_selection_number) car
+      - select [first](car_selection_number) car
+      - select [second](car_selection_number) car
+      - select [third](car_selection_number) car
+      - can you select [first](car_selection_number) car
+      - can you select [second](car_selection_number) car
+      - can you select [third](car_selection_number) car
+      - please select [first](car_selection_number) car
+      - choose [second](car_selection_number) car
+      - choose [third](car_selection_number) car please
 
   - synonym: select
     examples: |
@@ -190,7 +182,7 @@ nlu:
       - pick
       - get
 
-  - lookup: car_number
+  - lookup: car_selection_number
     examples: |
       - first
       - second

@@ -40,6 +40,7 @@ class ActionStartRecording(Action):
         print("metadata", metadata)
 
         # if the metadata type is recording and user is on dashboard fragment,
+        # TODO - get an object for all required start recording slots
         if metadata["type"] == MetadataType.RECORDING.value:
             if metadata["recordingMetadata"]["isDashboardFragment"]:
                 # if the user is on dashboard fragment, then check if recording is not currently going on

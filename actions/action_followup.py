@@ -63,6 +63,7 @@ class ActionFollowup(Action):
                 turn_on_bluetooth(dispatcher)
             else:
                 select_obd_adapter(dispatcher)
+        # TODO reset only start recording slots, maybe a function `ResetStartRecordingSlots`
         return [AllSlotsReset()]
 
 
