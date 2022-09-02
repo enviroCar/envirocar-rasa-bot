@@ -18,9 +18,10 @@ entities:
 actions:
   - action_start_recording
   - action_stop_recording
-  - validate_car_selection_form
   - action_ask_car_number
   - action_detailed_car_selection
+  - validate_car_selection_form
+  - action_car_selection
   - action_followup
 
 forms:
@@ -86,8 +87,16 @@ slots:
       - type: from_entity
         entity: car_selection_number
         conditions:
-            - active_loop: car_selection_form
-              requested_slot: car_number
+          - active_loop: car_selection_form
+            requested_slot: car_number
+  car_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+        conditions:
+          - active_loop: car_selection_form
+            requested_slot: car_name
   select_car_iteration:
     type: float
     initial_value: 0.0
@@ -105,7 +114,7 @@ slots:
       - type: custom
         conditions:
           - active_loop: car_selection_form
-            requested_slot:  next_car
+            requested_slot: next_car
   previous_car:
     type: bool
     influence_conversation: true
@@ -113,7 +122,7 @@ slots:
       - type: custom
         conditions:
           - active_loop: car_selection_form
-            requested_slot:   previous_car
+            requested_slot: previous_car
 responses:
   utter_greet:
     - text: Hey! How are you?
@@ -128,12 +137,6 @@ responses:
     - text: I am a bot, powered by Rasa.
   utter_did_that_help:
     - text: did that help?
-  utter_start_affirm:
-    - text: sure start I will.
-  utter_stop_affirm:
-    - text: sure stop I will.
-  utter_car:
-    - text: coolio, will select.
   utter_unspecified_recording_action:
     - text: please specify recording action, e.g. to start say "start recording" or to stop track say "stop recording".
   utter_envirocar_info:
