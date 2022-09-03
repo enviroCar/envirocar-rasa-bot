@@ -25,6 +25,8 @@ class ValidateCarSelectionForm(FormValidationAction):
 
         # get the car iteration number slot and other required slots
         # TODO - get an object for all required car selection slots
+        print(f"slot_value: {slot_value}")
+        
         select_car_iteration = tracker.get_slot("select_car_iteration")
         next_car = tracker.get_slot("next_car")
         previous_car = tracker.get_slot("previous_car")
@@ -107,13 +109,13 @@ def validate_car_selection(dispatcher: CollectingDispatcher, slot_value: str, ca
     # TODO: new function-> reset only car selection related slots
     if slot_value == "third" and len(available_cars) >= 3:
         # dispatcher.utter_message(text=f"{available_cars[2]} car is available")
-        return {"car_number": True, "car_name": available_cars[2]}
+        return {"car_number": "third", "car_name": available_cars[2]}
     if slot_value == "second" and len(available_cars) >= 2:
         # dispatcher.utter_message(text=f"{available_cars[1]} car is available")
-        return {"car_number": True, "car_name": available_cars[1]}
+        return {"car_number": "second", "car_name": available_cars[1]}
     if slot_value == "first" and len(available_cars) >= 1:
         # dispatcher.utter_message(text=f"{available_cars[0]} car is available")
-        return {"car_number": True, "car_name": available_cars[0]}
+        return {"car_number": "first", "car_name": available_cars[0]}
 
     dispatcher.utter_message(text="Something went wrong")
     return {"car_number": None}

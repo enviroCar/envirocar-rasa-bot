@@ -1,13 +1,14 @@
 from dataclasses import dataclass
 
 from model.activity_extras_model import ActivityExtrasModel
+from model.custom_event_model import CustomEventModel
 
 
 @dataclass
 class ActionModel:
     """data class for action model"""
 
-    custom_event: str
+    custom_event: CustomEventModel
     next_action: str
     activity_class_name: str = None
     activity_extras: ActivityExtrasModel = None

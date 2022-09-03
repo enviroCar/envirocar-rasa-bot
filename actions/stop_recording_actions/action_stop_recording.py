@@ -1,5 +1,7 @@
 import json
 from typing import Any, Text, Dict, List
+from enums.custom_event_type import CustomEventType
+from model.custom_event_model import CustomEventModel
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
@@ -71,12 +73,14 @@ def stop_recording(dispatcher: CollectingDispatcher, message: str, intent: str, 
         reply="Sure, I will stop recording",
         action=ActionModel(
             activity_class_name="org.envirocar.app.recording.RecordingService",
-            custom_event=Recording.STOP.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.Recording.value,
+                name=Recording.STOP.value
+            ),
             next_action=NextAction.STANDBY.value
         ),
         data={
             "intent": intent,
-            "entity": entities[0]['entity']
         }
     )
 

@@ -1,6 +1,9 @@
 from typing import Any, Text, Dict
+from enums.custom_event_type import CustomEventType
+from enums.navigation.navigation_screens import NavigationScreens
 
 from model.action_model import ActionModel
+from model.custom_event_model import CustomEventModel
 from model.next_action import NextAction
 from enums.recording.recording_requirements import RecordingRequirements
 
@@ -75,7 +78,10 @@ def navigate_dashboard_fragment(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="navigating to dashboard fragment",
         action=ActionModel(
-            custom_event=RecordingRequirements.DASHBOARD.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.NavigationScreens.value,
+                name=NavigationScreens.CAR_SELECTION.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -96,7 +102,10 @@ def grant_location_permission(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please grant location permission",
         action=ActionModel(
-            custom_event=RecordingRequirements.LOCATION_PERMS.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.RecordingRequirements.value,
+                name=RecordingRequirements.LOCATION_PERMS.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -117,7 +126,10 @@ def turn_on_gps(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please turn on GPS",
         action=ActionModel(
-            custom_event=RecordingRequirements.GPS.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.RecordingRequirements.value,
+                name=RecordingRequirements.GPS.value
+            ),
             next_action=NextAction.RECOGNITION.value),
         data={}
     )
@@ -137,7 +149,10 @@ def select_car(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please Select Car",
         action=ActionModel(
-            custom_event=RecordingRequirements.CAR.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.RecordingRequirements.value,
+                name=RecordingRequirements.CAR.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -158,7 +173,10 @@ def grant_bluetooth_permission(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please grant Bluetooth permissions",
         action=ActionModel(
-            custom_event=RecordingRequirements.BLUETOOTH_PERMS.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.RecordingRequirements.value,
+                name=RecordingRequirements.BLUETOOTH_PERMS.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -179,7 +197,10 @@ def turn_on_bluetooth(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please turn on Bluetooth",
         action=ActionModel(
-            custom_event=RecordingRequirements.BLUETOOTH.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.RecordingRequirements.value,
+                name=RecordingRequirements.BLUETOOTH.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -200,7 +221,10 @@ def select_obd_adapter(dispatcher: CollectingDispatcher) -> None:
         query="",
         reply="Please select OBD Devices",
         action=ActionModel(
-            custom_event=RecordingRequirements.OBD.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.RecordingRequirements.value,
+                name=RecordingRequirements.OBD.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}

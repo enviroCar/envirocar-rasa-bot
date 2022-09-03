@@ -1,4 +1,6 @@
 import json
+from enums.custom_event_type import CustomEventType
+from model.custom_event_model import CustomEventModel
 
 from rasa_sdk.executor import CollectingDispatcher
 
@@ -14,10 +16,13 @@ def nav_to_car_selection_screen(dispatcher: CollectingDispatcher, message: str, 
         reply="You are not on car selection screen, navigating to car selection screen. Please ask for car selection again",
         action=ActionModel(
             activity_class_name="org.envirocar.app.views.carselection.CarSelectionActivity",
-            custom_event=NavigationScreens.CAR_SELECTION.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.NavigationScreens.value,
+                name=NavigationScreens.CAR_SELECTION.value
+            ),
             next_action=NextAction.RECOGNITION.value
         ),
-        data={"intent": intent, "entity": entities[0]['entity']}
+        data={"intent": intent}
     )
     dispatcher.utter_message(
         json_message={"query": response.query, "reply": response.reply, "action": response.action.as_dict(),

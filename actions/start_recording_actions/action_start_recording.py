@@ -1,7 +1,9 @@
 import json
 from typing import Any, Text, Dict, List
+from enums.custom_event_type import CustomEventType
 
 from enums.recording.recording import Recording
+from model.custom_event_model import CustomEventModel
 from model.next_action import NextAction
 from enums.recording.RecordingState import RecordingState
 
@@ -71,7 +73,8 @@ class ActionStartRecording(Action):
 
                         # GPS MODE
                         if recording_mode == RecordingMode.GPS.value:
-                            start_recording(dispatcher, message, intent, entities)
+                            start_recording(
+                                dispatcher, message, intent, entities)
                             return [
                                 SlotSet("location_permission", True),
                                 SlotSet("is_dashboard_fragment", True),
@@ -83,29 +86,38 @@ class ActionStartRecording(Action):
                             if metadata["recordingMetadata"]["has_bluetooth_permission"]:
                                 if bluetooth == Bluetooth.ON.value:
                                     if obd_adapter == OBDAdapter.Selected.value:
-                                        start_recording(dispatcher, message, intent, entities)
+                                        start_recording(
+                                            dispatcher, message, intent, entities)
                                         return [
-                                            SlotSet("location_permission", True),
-                                            SlotSet("is_dashboard_fragment", True),
+                                            SlotSet(
+                                                "location_permission", True),
+                                            SlotSet(
+                                                "is_dashboard_fragment", True),
                                             SlotSet("gps", True),
                                             SlotSet("car", True),
-                                            SlotSet("bluetooth_permission", True),
+                                            SlotSet(
+                                                "bluetooth_permission", True),
                                             SlotSet("bluetooth", True),
                                             SlotSet("obd_adapter", True),
-                                            SlotSet("recording_start_query", False)
+                                            SlotSet(
+                                                "recording_start_query", False)
                                         ]
                                     else:
                                         dispatcher.utter_message(
                                             text="OBD Adapter is not selected! Do you want to select one?")
                                         return [
-                                            SlotSet("location_permission", True),
-                                            SlotSet("is_dashboard_fragment", True),
+                                            SlotSet(
+                                                "location_permission", True),
+                                            SlotSet(
+                                                "is_dashboard_fragment", True),
                                             SlotSet("gps", True),
                                             SlotSet("car", True),
-                                            SlotSet("bluetooth_permission", True),
+                                            SlotSet(
+                                                "bluetooth_permission", True),
                                             SlotSet("bluetooth", True),
                                             SlotSet("obd_adapter", False),
-                                            SlotSet("recording_start_query", True)
+                                            SlotSet(
+                                                "recording_start_query", True)
                                         ]
                                 else:
                                     dispatcher.utter_message(
@@ -175,13 +187,13 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
         reply="Sure, I will start recording",
         action=ActionModel(
             activity_class_name="org.envirocar.app.recording.RecordingService",
-            custom_event=Recording.START.value,
+            custom_event=CustomEventModel(
+                type=CustomEventType.Recording.value,
+                name=Recording.START.value
+            ),
             next_action=NextAction.STANDBY.value
         ),
-        data={
-            "intent": intent,
-            "entity": entities[0]['entity']
-        }
+        data={"intent": intent,}
     )
 
     dispatcher.utter_message(json_message={

@@ -1,5 +1,7 @@
 import json
 from typing import Any, Text, Dict, List
+from enums.custom_event_type import CustomEventType
+from model.custom_event_model import CustomEventModel
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
@@ -64,10 +66,13 @@ def select_car(dispatcher: CollectingDispatcher, metadata, car_name: str, messag
             query=message, reply=f"Okay, selecting {car_name}",
             action=ActionModel(
                 activity_class_name="org.envirocar.app.views.carselection.CarSelectionActivity",
-                custom_event=CarSelection.SELECT.value,
+                custom_event=CustomEventModel(
+                    type=CustomEventType.CarSelection.value,
+                    name=CarSelection.SELECT.value
+                ).as_dict(),
                 next_action=NextAction.STANDBY.value
             ),
-            data={"intent": intent, "entity": entities[0]['entity'], "car_name": car_name}
+            data={"intent": intent, "car_name": car_name}
         )
         dispatcher.utter_message(
             json_message={"query": response.query, "reply": response.reply, "action": response.action.as_dict(),
