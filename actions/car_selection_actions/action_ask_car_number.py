@@ -55,6 +55,7 @@ class ActionAskCarNumber(Action):
                     dispatcher.utter_message(text=available_car_status["message"])
         else:
             # return a message and deactive the form
+            print(f"{self.name()}: {metadata['type']} is not CAR_SELECTION")
             dispatcher.utter_message(text="Something went wrong! Please try again!")
             return [ActiveLoop(None), SlotSet('car_number', None)]
         return []

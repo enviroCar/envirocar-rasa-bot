@@ -14,8 +14,8 @@ class ValidateCarSelectionForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_car_selection_form"
 
-    @staticmethod
     def validate_car_number(
+            self,
             slot_value: Any,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -26,7 +26,7 @@ class ValidateCarSelectionForm(FormValidationAction):
         # get the car iteration number slot and other required slots
         # TODO - get an object for all required car selection slots
         print(f"slot_value: {slot_value}")
-        
+
         select_car_iteration = tracker.get_slot("select_car_iteration")
         next_car = tracker.get_slot("next_car")
         previous_car = tracker.get_slot("previous_car")
@@ -75,47 +75,48 @@ class ValidateCarSelectionForm(FormValidationAction):
                     return {"car_number": None, "previous_car": True,
                             "select_car_iteration": select_car_iteration - 1.0}
 
-                return validate_car_selection(dispatcher, slot_value.lower(), cars, select_car_iteration,
-                                              car_utils, next_car, previous_car, next_index)
+                return self.validate_car_selection(dispatcher, slot_value.lower(), cars, select_car_iteration,
+                                                   car_utils, next_car, previous_car, next_index)
         return {}
 
-
-def validate_car_selection(dispatcher: CollectingDispatcher, slot_value: str, cars: list, select_car_iteration: int,
-                           car_utils: CarUtils, next_car: bool, previous_car: bool, next_car_index: int) -> Dict[
-    Text, Any]:
-    car_index = car_utils.get_car_index(select_car_iteration=select_car_iteration)
-    available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
-    available_cars = available_car_status["cars"]
-
-    # We increment or decrement every time the user selects the next or previous car(depending on the index of car list),
-    # so below snippet is there to get available cars for last iteration for selecting correct car.
-    new_select_car_iteration = select_car_iteration
-
-    if next_car_index != select_car_iteration and next_car:
-        new_select_car_iteration -= 1
-    elif previous_car:
-        new_select_car_iteration += 1
-
-    # get available cars based on `new_select_car_iteration`
-    if new_select_car_iteration > 0:
-        car_index = car_utils.get_car_index(select_car_iteration=new_select_car_iteration)
-        available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
-        available_cars = available_car_status["cars"]
-    elif new_select_car_iteration > 0:
-        car_index = car_utils.get_car_index(select_car_iteration=new_select_car_iteration)
+    def validate_car_selection(self, dispatcher: CollectingDispatcher, slot_value: str, cars: list,
+                               select_car_iteration: int,
+                               car_utils: CarUtils, next_car: bool, previous_car: bool, next_car_index: int) -> Dict[
+        Text, Any]:
+        car_index = car_utils.get_car_index(select_car_iteration=select_car_iteration)
         available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
         available_cars = available_car_status["cars"]
 
-    # TODO: new function-> reset only car selection related slots
-    if slot_value == "third" and len(available_cars) >= 3:
-        # dispatcher.utter_message(text=f"{available_cars[2]} car is available")
-        return {"car_number": "third", "car_name": available_cars[2]}
-    if slot_value == "second" and len(available_cars) >= 2:
-        # dispatcher.utter_message(text=f"{available_cars[1]} car is available")
-        return {"car_number": "second", "car_name": available_cars[1]}
-    if slot_value == "first" and len(available_cars) >= 1:
-        # dispatcher.utter_message(text=f"{available_cars[0]} car is available")
-        return {"car_number": "first", "car_name": available_cars[0]}
+        # We increment or decrement every time the user selects the next or previous car(depending on the index of car list),
+        # so below snippet is there to get available cars for last iteration for selecting correct car.
+        new_select_car_iteration = select_car_iteration
 
-    dispatcher.utter_message(text="Something went wrong")
-    return {"car_number": None}
+        if next_car_index != select_car_iteration and next_car:
+            new_select_car_iteration -= 1
+        elif previous_car:
+            new_select_car_iteration += 1
+
+        # get available cars based on `new_select_car_iteration`
+        if new_select_car_iteration > 0:
+            car_index = car_utils.get_car_index(select_car_iteration=new_select_car_iteration)
+            available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
+            available_cars = available_car_status["cars"]
+        elif new_select_car_iteration > 0:
+            car_index = car_utils.get_car_index(select_car_iteration=new_select_car_iteration)
+            available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
+            available_cars = available_car_status["cars"]
+
+        # TODO: new function-> reset only car selection related slots
+        if slot_value == "third" and len(available_cars) >= 3:
+            # dispatcher.utter_message(text=f"{available_cars[2]} car is available")
+            return {"car_number": "third", "car_name": available_cars[2]}
+        if slot_value == "second" and len(available_cars) >= 2:
+            # dispatcher.utter_message(text=f"{available_cars[1]} car is available")
+            return {"car_number": "second", "car_name": available_cars[1]}
+        if slot_value == "first" and len(available_cars) >= 1:
+            # dispatcher.utter_message(text=f"{available_cars[0]} car is available")
+            return {"car_number": "first", "car_name": available_cars[0]}
+
+        print(f"{self.name()}: Something went wrong with validating car selection and assigning 'car_name' slot.")
+        dispatcher.utter_message(text="Something went wrong")
+        return {"car_number": None}

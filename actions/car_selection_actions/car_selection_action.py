@@ -21,8 +21,7 @@ class ActionCarSelection(Action):
     def name(self) -> Text:
         return "action_car_selection"
 
-    @staticmethod
-    def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
         Dict[Text, Any]
     ]:
 
@@ -50,33 +49,35 @@ class ActionCarSelection(Action):
                 nav_to_car_selection_screen(dispatcher, message, intent, entities)
             elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
                 # if the user is on car selection screen, select the car
-                select_car(dispatcher, metadata, car_name, message, intent, entities)
+                self.select_car(dispatcher, metadata, car_name, message, intent, entities)
             else:
+                print(f"{self.name()}: user is not on dashboard and also not on car selection screen... ")
                 dispatcher.utter_message(text="Something went wrong! Please try again!")
         else:
+            print(f" {self.name()}: {metadata['type']} is not CAR_SELECTION")
             dispatcher.utter_message(text="Something went wrong! Please try again!")
         return [SlotSet("car_name", None)]
 
-
-def select_car(dispatcher: CollectingDispatcher, metadata, car_name: str, message: str, intent: str,
-               entities: json) -> None:
-    cars = metadata["car_selection_metadata"]["cars"]
-    if car_name in cars:
-        response = ResponseModel(
-            query=message, reply=f"Okay, selecting {car_name}",
-            action=ActionModel(
-                activity_class_name="org.envirocar.app.views.carselection.CarSelectionActivity",
-                custom_event=CustomEventModel(
-                    type=CustomEventType.CarSelection.value,
-                    name=CarSelection.SELECT.value
-                ).as_dict(),
-                next_action=NextAction.STANDBY.value
-            ),
-            data={"intent": intent, "car_name": car_name}
-        )
-        dispatcher.utter_message(
-            json_message={"query": response.query, "reply": response.reply, "action": response.action.as_dict(),
-                          "data": response.data}
-        )
-    else:
-        dispatcher.utter_message(text="Something went wrong! Please try again!")
+    def select_car(self, dispatcher: CollectingDispatcher, metadata, car_name: str, message: str, intent: str,
+                   entities: json) -> None:
+        cars = metadata["car_selection_metadata"]["cars"]
+        if car_name in cars:
+            response = ResponseModel(
+                query=message, reply=f"Okay, selecting {car_name}",
+                action=ActionModel(
+                    activity_class_name="org.envirocar.app.views.carselection.CarSelectionActivity",
+                    custom_event=CustomEventModel(
+                        type=CustomEventType.CarSelection.value,
+                        name=CarSelection.SELECT.value
+                    ).as_dict(),
+                    next_action=NextAction.STANDBY.value
+                ),
+                data={"intent": intent, "car_name": car_name}
+            )
+            dispatcher.utter_message(
+                json_message={"query": response.query, "reply": response.reply, "action": response.action.as_dict(),
+                              "data": response.data}
+            )
+        else:
+            print(f"{self.name()} {car_name} not found in the car list")
+            dispatcher.utter_message(text="Something went wrong! Please try again!")

@@ -22,8 +22,7 @@ class ActionStopRecording(Action):
     def name(**kwargs) -> Text:
         return "action_stop_recording"
 
-    @staticmethod
-    def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
         Dict[Text, Any]
     ]:
         message = tracker.latest_message.get("text")
@@ -54,6 +53,7 @@ class ActionStopRecording(Action):
                         text="There is currently no Recording going on")
                     return [SlotSet("recording_stop_query", False)]
                 else:
+                    print(f"{self.name()}: Wrong recording state other than init, running or stopped")
                     dispatcher.utter_message(
                         text="Wrong Recording state, Something went wrong!")
                     return [SlotSet("recording_stop_query", False)]
@@ -62,6 +62,7 @@ class ActionStopRecording(Action):
                     text="You are not on dashboard fragment! Please go to dashboard fragment to start recording.")
                 return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_stop_query", True)]
         else:
+            print(f" {self.name()}: {metadata['type']} is not RECORDING")
             dispatcher.utter_message(
                 text="Something went wrong! Please try again!")
             return [SlotSet("recording_stop_query", False)]

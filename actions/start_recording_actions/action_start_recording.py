@@ -28,8 +28,7 @@ class ActionStartRecording(Action):
     def name(**kwargs) -> Text:
         return "action_start_recording"
 
-    @staticmethod
-    def run(dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any], **kwargs) -> List[
         Dict[Text, Any]
     ]:
         message = tracker.latest_message.get("text")
@@ -160,6 +159,8 @@ class ActionStartRecording(Action):
                         text="Recording is starting, Please wait!")
                     return [SlotSet("recording_start_query", False)]
                 else:
+                    print(
+                        f"{self.name()}: Wrong Recording state, Something went wrong!")
                     dispatcher.utter_message(
                         text="Wrong Recording state, Something went wrong!")
                     return [SlotSet("recording_start_query", False)]
@@ -176,6 +177,7 @@ class ActionStartRecording(Action):
                     text="You are not on dashboard fragment! Please go to dashboard fragment to start recording.")
                 return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_start_query", True)]
         else:
+            print(f" {self.name()}: {metadata['type']} is not RECORDING")
             dispatcher.utter_message(
                 text="Something went wrong! Please try again!")
             return [SlotSet("recording_start_query", False)]
@@ -193,7 +195,7 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
             ),
             next_action=NextAction.STANDBY.value
         ),
-        data={"intent": intent,}
+        data={"intent": intent, }
     )
 
     dispatcher.utter_message(json_message={
