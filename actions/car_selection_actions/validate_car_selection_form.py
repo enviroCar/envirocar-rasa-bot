@@ -42,41 +42,41 @@ class ValidateCarSelectionForm(FormValidationAction):
         next_index = 0
 
         # check the metadata type is `CAR_SELECTION`
-        if metadata["type"] == MetadataType.CAR_SELECTION.value:
-            if metadata["car_selection_metadata"]["is_car_selection_fragment"]:
-                cars = metadata["car_selection_metadata"]["cars"]
-                car_utils = CarUtils()
-                car_index = car_utils.get_car_index(select_car_iteration=select_car_iteration)
-                available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
-                available_message = available_car_status["message"]
-                # if s
-                if slot_value.lower() not in ALLOWED_CAR_NUMBER:
-                    dispatcher.utter_message(text="Please specify a correct number that is one, two or three")
-                    return {"car_number": None}
-                if slot_value.lower() == "next":
-                    next_utter_status = car_utils.get_next_utter_status(select_car_iteration=select_car_iteration,
-                                                                        cars=cars)
-                    utter_message = next_utter_status["message"]
+        # if metadata["type"] == MetadataType.CAR_SELECTION.value:
+        if metadata["car_selection_metadata"]["is_car_selection_fragment"]:
+            cars = metadata["car_selection_metadata"]["cars"]
+            car_utils = CarUtils()
+            car_index = car_utils.get_car_index(select_car_iteration=select_car_iteration)
+            available_car_status = car_utils.get_available_car_status(cars=cars, car_index=car_index)
+            available_message = available_car_status["message"]
+            # if s
+            if slot_value.lower() not in ALLOWED_CAR_NUMBER:
+                dispatcher.utter_message(text="Please specify a correct number that is one, two or three")
+                return {"car_number": None}
+            if slot_value.lower() == "next":
+                next_utter_status = car_utils.get_next_utter_status(select_car_iteration=select_car_iteration,
+                                                                    cars=cars)
+                utter_message = next_utter_status["message"]
 
-                    next_index = return_select_car_iteration = select_car_iteration \
-                        if next_utter_status["index"] == 0 else select_car_iteration + 1.0
-                    dispatcher.utter_message(text=utter_message)
-                    return {"car_number": None, "next_car": True, "previous_car": False,
-                            "select_car_iteration": return_select_car_iteration}
-                if slot_value.lower() == "previous" and select_car_iteration == 0:
-                    dispatcher.utter_message(text="You are on the first list, you can't go previous")
-                    dispatcher.utter_message(text=available_message)
+                next_index = return_select_car_iteration = select_car_iteration \
+                    if next_utter_status["index"] == 0 else select_car_iteration + 1.0
+                dispatcher.utter_message(text=utter_message)
+                return {"car_number": None, "next_car": True, "previous_car": False,
+                        "select_car_iteration": return_select_car_iteration}
+            if slot_value.lower() == "previous" and select_car_iteration == 0:
+                dispatcher.utter_message(text="You are on the first list, you can't go previous")
+                dispatcher.utter_message(text=available_message)
 
-                    return {"car_number": None, "next_car": False, "previous_car": False}
-                if slot_value.lower() == "previous":
-                    utter_message = car_utils.get_prev_available_car_message(cars, select_car_iteration)
-                    dispatcher.utter_message(text=utter_message)
+                return {"car_number": None, "next_car": False, "previous_car": False}
+            if slot_value.lower() == "previous":
+                utter_message = car_utils.get_prev_available_car_message(cars, select_car_iteration)
+                dispatcher.utter_message(text=utter_message)
 
-                    return {"car_number": None, "previous_car": True,
-                            "select_car_iteration": select_car_iteration - 1.0}
+                return {"car_number": None, "previous_car": True,
+                        "select_car_iteration": select_car_iteration - 1.0}
 
-                return self.validate_car_selection(dispatcher, slot_value.lower(), cars, select_car_iteration,
-                                                   car_utils, next_car, previous_car, next_index)
+            return self.validate_car_selection(dispatcher, slot_value.lower(), cars, select_car_iteration,
+                                                car_utils, next_car, previous_car, next_index)
         return {}
 
     def validate_car_selection(self, dispatcher: CollectingDispatcher, slot_value: str, cars: list,

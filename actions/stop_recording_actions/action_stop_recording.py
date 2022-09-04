@@ -36,36 +36,35 @@ class ActionStopRecording(Action):
 
         # if the metadata type is recording and user is on dashboard fragment,
         # TODO - get an object for all required start recording slots
-        if metadata["type"] == MetadataType.RECORDING.value:
-            if metadata["recordingMetadata"]["isDashboardFragment"]:
-                # if the user is on dashboard fragment, then check if recording is currently going on
-                if metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_RUNNING.value:
-                    # if recording is currently going on, then stop the recording
-                    stop_recording(dispatcher, message, intent, entities)
-                    return [SlotSet("is_dashboard_fragment", True)]
+        # if metadata["type"] == MetadataType.RECORDING.value:
+        if metadata["recordingMetadata"]["isDashboardFragment"]:
+            # if the user is on dashboard fragment, then check if recording is currently going on
+            if metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_RUNNING.value:
+                # if recording is currently going on, then stop the recording
+                stop_recording(dispatcher, message, intent, entities)
+                return [SlotSet("is_dashboard_fragment", True)]
 
-                elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_STOPPED.value:
-                    dispatcher.utter_message(
-                        text="There is currently no Recording going on")
-                    return [SlotSet("recording_stop_query", False)]
-                elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_INIT.value:
-                    dispatcher.utter_message(
-                        text="There is currently no Recording going on")
-                    return [SlotSet("recording_stop_query", False)]
-                else:
-                    print(f"{self.name()}: Wrong recording state other than init, running or stopped")
-                    dispatcher.utter_message(
-                        text="Wrong Recording state, Something went wrong!")
-                    return [SlotSet("recording_stop_query", False)]
-            else:
+            elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_STOPPED.value:
                 dispatcher.utter_message(
-                    text="You are not on dashboard fragment! Please go to dashboard fragment to start recording.")
-                return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_stop_query", True)]
+                    text="There is currently no Recording going on")
+                return [SlotSet("recording_stop_query", False)]
+            elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_INIT.value:
+                dispatcher.utter_message(
+                    text="There is currently no Recording going on")
+                return [SlotSet("recording_stop_query", False)]
+            else:
+                print(f"{self.name()}: Wrong recording state other than init, running or stopped")
+                dispatcher.utter_message(
+                    text="Wrong Recording state, Something went wrong!")
+                return [SlotSet("recording_stop_query", False)]
         else:
-            print(f" {self.name()}: {metadata['type']} is not RECORDING")
             dispatcher.utter_message(
+                text="You are not on dashboard fragment! Please go to dashboard fragment to start recording.")
+            return [SlotSet("is_dashboard_fragment", False), SlotSet("recording_stop_query", True)]
+        
+        dispatcher.utter_message(
                 text="Something went wrong! Please try again!")
-            return [SlotSet("recording_stop_query", False)]
+        return [SlotSet("recording_stop_query", False)]
 
 
 def stop_recording(dispatcher: CollectingDispatcher, message: str, intent: str, entities: json) -> None:

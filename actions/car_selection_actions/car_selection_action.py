@@ -42,20 +42,21 @@ class ActionCarSelection(Action):
 
         # get the `car_name` slot value
         car_name = tracker.get_slot("car_name")
+
         # if the metadata type is car selection
-        if metadata["type"] == MetadataType.CAR_SELECTION.value:
-            if metadata["isDashboardFragment"] and not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
-                # if the user is on dashboard fragment, then navigate them to car selection screen
-                nav_to_car_selection_screen(dispatcher, message, intent, entities)
-            elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
-                # if the user is on car selection screen, select the car
-                self.select_car(dispatcher, metadata, car_name, message, intent, entities)
-            else:
-                print(f"{self.name()}: user is not on dashboard and also not on car selection screen... ")
-                dispatcher.utter_message(text="Something went wrong! Please try again!")
+        # if metadata["type"] == MetadataType.CAR_SELECTION.value:
+        if metadata["isDashboardFragment"] and not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
+            # if the user is on dashboard fragment, then navigate them to car selection screen
+            nav_to_car_selection_screen(dispatcher, message, intent, entities)
+        elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
+            # if the user is on car selection screen, select the car
+            self.select_car(dispatcher, metadata, car_name, message, intent, entities)
         else:
-            print(f" {self.name()}: {metadata['type']} is not CAR_SELECTION")
+            print(f"{self.name()}: user is not on dashboard and also not on car selection screen... ")
             dispatcher.utter_message(text="Something went wrong! Please try again!")
+        # else:
+        #     print(f" {self.name()}: {metadata['type']} is not CAR_SELECTION")
+        #     dispatcher.utter_message(text="Something went wrong! Please try again!")
         return [SlotSet("car_name", None)]
 
     def select_car(self, dispatcher: CollectingDispatcher, metadata, car_name: str, message: str, intent: str,

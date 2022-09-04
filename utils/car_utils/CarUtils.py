@@ -122,22 +122,22 @@ class CarUtils:
     @staticmethod
     def ask_car_number(metadata, dispatcher, tracker, intent, entities, message) -> bool:
         # if the metadata type is car selection
-        if metadata["type"] == MetadataType.CAR_SELECTION.value:
-            if metadata["isDashboardFragment"] and \
-                    not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
-                # if the user is on dashboard fragment, then navigate them to car selection screen
-                nav_to_car_selection_screen(dispatcher, message, intent, entities)
-            elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
-                # if the user is on car selection screen, start the form
-                select_car_iteration = tracker.get_slot("select_car_iteration")
+        # if metadata["type"] == MetadataType.CAR_SELECTION.value:
+        if metadata["isDashboardFragment"] and \
+                not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
+            # if the user is on dashboard fragment, then navigate them to car selection screen
+            nav_to_car_selection_screen(dispatcher, message, intent, entities)
+        elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
+            # if the user is on car selection screen, start the form
+            select_car_iteration = tracker.get_slot("select_car_iteration")
 
-                cars = metadata["car_selection_metadata"]["cars"]
+            cars = metadata["car_selection_metadata"]["cars"]
 
-                car_utils = CarUtils()
-                car_index = car_utils.get_car_index(select_car_iteration)
+            car_utils = CarUtils()
+            car_index = car_utils.get_car_index(select_car_iteration)
 
-                available_car_status = car_utils.get_available_car_status(cars, car_index)
-                dispatcher.utter_message(text=available_car_status["message"])
-            return True
-        else:
-            return False
+            available_car_status = car_utils.get_available_car_status(cars, car_index)
+            dispatcher.utter_message(text=available_car_status["message"])
+        return True
+        # else:
+        # return False
