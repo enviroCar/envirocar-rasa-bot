@@ -57,15 +57,13 @@ class ActionStartRecording(Action):
 
                     # validating recording requirements
                     if gps == GPS.OFF.value:
-                        dispatcher.utter_message(
-                            text="GPS is not on! Do you want to turn it on?")
+                        return_response(dispatcher, "GPS is not on! Do you want to turn it on?")
                         return [SlotSet("location_permission", True), SlotSet("is_dashboard_fragment", True),
                                 SlotSet("gps", False),
                                 SlotSet("recording_start_query", True)]
 
                     if car == Car.Not_Selected.value:
-                        dispatcher.utter_message(
-                            text="Car is not selected! Do you want to select one?")
+                        return_response(dispatcher, "Car is not selected! Do you want to select one?")
                         return [SlotSet("location_permission", True), SlotSet("is_dashboard_fragment", True),
                                 SlotSet("car", False), SlotSet("recording_start_query", True)]
 
@@ -101,8 +99,8 @@ class ActionStartRecording(Action):
                                             "recording_start_query", False)
                                     ]
                                 else:
-                                    dispatcher.utter_message(
-                                        text="OBD Adapter is not selected! Do you want to select one?")
+                                    return_response(dispatcher,
+                                                    "OBD Adapter is not selected! Do you want to select one?")
                                     return [
                                         SlotSet(
                                             "location_permission", True),
@@ -118,8 +116,7 @@ class ActionStartRecording(Action):
                                             "recording_start_query", True)
                                     ]
                             else:
-                                dispatcher.utter_message(
-                                    text="Bluetooth is not on! Do you want to turn it on?")
+                                return_response(dispatcher, "Bluetooth is not on! Do you want to turn it on?")
                                 return [
                                     SlotSet("location_permission", True),
                                     SlotSet("is_dashboard_fragment", True),
@@ -130,8 +127,7 @@ class ActionStartRecording(Action):
                                     SlotSet("recording_start_query", True)
                                 ]
                         else:
-                            dispatcher.utter_message(
-                                text="Bluetooth permission is not granted! Do you want to grant it?")
+                            return_response(dispatcher, "Bluetooth permission is not granted! Do you want to grant it?")
                             return [
                                 SlotSet("location_permission", True),
                                 SlotSet("is_dashboard_fragment", True),
@@ -142,8 +138,7 @@ class ActionStartRecording(Action):
                                 SlotSet("recording_start_query", True)
                             ]
                 else:
-                    dispatcher.utter_message(
-                        text="Location permission is not granted! Do you want to grant it?")
+                    return_response(dispatcher, "Location permission is not granted! Do you want to grant it?")
                     return [
                         SlotSet("is_dashboard_fragment", True),
                         SlotSet("location_permission", False),
@@ -195,6 +190,24 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
             next_action=NextAction.STANDBY.value
         ),
         data={"intent": intent, }
+    )
+
+    dispatcher.utter_message(json_message={
+        "query": response.query,
+        "reply": response.reply,
+        "action": response.action.as_dict(),
+        "data": response.data
+    })
+
+
+def return_response(dispatcher: CollectingDispatcher, reply: str):
+    response = ResponseModel(
+        query="query",
+        reply=reply,
+        action=ActionModel(
+            next_action=NextAction.RECOGNITION.value
+        ),
+        data={}
     )
 
     dispatcher.utter_message(json_message={
