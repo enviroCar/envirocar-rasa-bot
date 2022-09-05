@@ -43,7 +43,7 @@ class ActionStartRecording(Action):
         # if the metadata type is recording and user is on dashboard fragment,
         # TODO - get an object for all required start recording slots
         # if metadata["type"] == MetadataType.RECORDING.value:
-        if metadata["recordingMetadata"]["isDashboardFragment"]:
+        if metadata["isDashboardFragment"]:
             # if the user is on dashboard fragment, then check if recording is not currently going on
             if metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_STOPPED.value:
                 # check if the user has granted location permission
@@ -54,7 +54,6 @@ class ActionStartRecording(Action):
                     car = metadata["recordingMetadata"]["car"]
                     bluetooth = metadata["recordingMetadata"]["bluetooth"]
                     obd_adapter = metadata["recordingMetadata"]["obd_adapter"]
-                    is_dashboard_fragment = metadata["recordingMetadata"]["isDashboardFragment"]
 
                     # validating recording requirements
                     if gps == GPS.OFF.value:
