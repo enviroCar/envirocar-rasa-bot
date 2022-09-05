@@ -19,7 +19,7 @@ def nav_to_car_selection_screen(dispatcher: CollectingDispatcher, message: str, 
             custom_event=CustomEventModel(
                 type=CustomEventType.NavigationScreens.value,
                 name=NavigationScreens.CAR_SELECTION.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={"intent": intent}

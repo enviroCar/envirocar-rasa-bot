@@ -81,7 +81,7 @@ def navigate_dashboard_fragment(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.NavigationScreens.value,
                 name=NavigationScreens.CAR_SELECTION.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -105,7 +105,7 @@ def grant_location_permission(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.RecordingRequirements.value,
                 name=RecordingRequirements.LOCATION_PERMS.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -129,7 +129,7 @@ def turn_on_gps(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.RecordingRequirements.value,
                 name=RecordingRequirements.GPS.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value),
         data={}
     )
@@ -152,7 +152,7 @@ def select_car(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.RecordingRequirements.value,
                 name=RecordingRequirements.CAR.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -176,7 +176,7 @@ def grant_bluetooth_permission(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.RecordingRequirements.value,
                 name=RecordingRequirements.BLUETOOTH_PERMS.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -200,7 +200,7 @@ def turn_on_bluetooth(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.RecordingRequirements.value,
                 name=RecordingRequirements.BLUETOOTH.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}
@@ -224,7 +224,7 @@ def select_obd_adapter(dispatcher: CollectingDispatcher) -> None:
             custom_event=CustomEventModel(
                 type=CustomEventType.RecordingRequirements.value,
                 name=RecordingRequirements.OBD.value
-            ),
+            ).as_dict(),
             next_action=NextAction.RECOGNITION.value
         ),
         data={}

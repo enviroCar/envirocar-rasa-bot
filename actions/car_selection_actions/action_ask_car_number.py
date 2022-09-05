@@ -36,7 +36,9 @@ class ActionAskCarNumber(Action):
 
         # if the metadata type is car selection
         # if metadata["type"] == MetadataType.CAR_SELECTION.value:
+
         # check if intent is `select_car` to avoid any NLP errors
+        # TODO: if the form is on and intent is `select_car`, then directly go for next steps!
         if intent == "select_car":
             if metadata["isDashboardFragment"] and \
                     not metadata["car_selection_metadata"]["is_car_selection_fragment"]:

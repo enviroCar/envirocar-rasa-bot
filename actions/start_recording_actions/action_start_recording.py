@@ -192,7 +192,7 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
             custom_event=CustomEventModel(
                 type=CustomEventType.Recording.value,
                 name=Recording.START.value
-            ),
+            ).as_dict(),
             next_action=NextAction.STANDBY.value
         ),
         data={"intent": intent, }
