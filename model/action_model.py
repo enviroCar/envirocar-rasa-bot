@@ -8,8 +8,8 @@ from model.custom_event_model import CustomEventModel
 class ActionModel:
     """data class for action model"""
 
-    custom_event: CustomEventModel
     next_action: str
+    custom_event: CustomEventModel = None
     activity_class_name: str = None
     activity_extras: ActivityExtrasModel = None
 

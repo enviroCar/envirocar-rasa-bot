@@ -36,12 +36,13 @@ class ActionAskCarNumber(Action):
 
         # if the metadata type is car selection
         # if metadata["type"] == MetadataType.CAR_SELECTION.value:
-            # check if intent is `select_car` to avoid any NLP errors
+        # check if intent is `select_car` to avoid any NLP errors
         if intent == "select_car":
             if metadata["isDashboardFragment"] and \
                     not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
                 # if the user is on dashboard fragment, then navigate them to car selection screen
-                nav_to_car_selection_screen(dispatcher, message, intent, entities)
+                nav_to_car_selection_screen(
+                    dispatcher, message, intent, entities)
             elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
                 # if the user is on car selection screen, start the form
                 select_car_iteration = tracker.get_slot("select_car_iteration")
@@ -51,13 +52,21 @@ class ActionAskCarNumber(Action):
                 car_utils = CarUtils()
                 car_index = car_utils.get_car_index(select_car_iteration)
 
-                available_car_status = car_utils.get_available_car_status(cars, car_index)
-                dispatcher.utter_message(text=available_car_status["message"])
+                available_car_status = car_utils.get_available_car_status(
+                    cars, car_index)
+                response = car_utils.return_response(
+                    available_car_status["message"])
+                dispatcher.utter_message(json_message={
+                    "query": response.query,
+                    "reply": response.reply,
+                    "action": response.action.as_dict(),
+                    "data": response.data
+                })
         else:
             # return a message and deactive the form
             print(f"{self.name()}: {metadata['type']} is not CAR_SELECTION")
             dispatcher.utter_message(
-            text="Something went wrong! Please try again!")
+                text="Something went wrong! Please try again!")
             return [ActiveLoop(None), SlotSet('car_number', None)]
         # else:
         #     # return a message and deactive the form

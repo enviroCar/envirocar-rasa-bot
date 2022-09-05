@@ -1,4 +1,7 @@
 from enums.recording.metadata_type import MetadataType
+from model.action_model import ActionModel
+from model.next_action import NextAction
+from model.response_model import ResponseModel
 from utils.car_utils.navigation_to_screen import nav_to_car_selection_screen
 
 
@@ -136,8 +139,20 @@ class CarUtils:
             car_utils = CarUtils()
             car_index = car_utils.get_car_index(select_car_iteration)
 
-            available_car_status = car_utils.get_available_car_status(cars, car_index)
+            available_car_status = car_utils.get_available_car_status(
+                cars, car_index)
             dispatcher.utter_message(text=available_car_status["message"])
         return True
         # else:
         # return False
+
+    def return_response(reply: str):
+        response = ResponseModel(
+            query="",
+            reply=reply,
+            action=ActionModel(
+                next_action=NextAction.RECOGNITION.value
+            ),
+            data={}
+        )
+        return response
