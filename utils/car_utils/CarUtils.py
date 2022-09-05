@@ -141,7 +141,14 @@ class CarUtils:
 
             available_car_status = car_utils.get_available_car_status(
                 cars, car_index)
-            dispatcher.utter_message(text=available_car_status["message"])
+            response = car_utils.return_response(
+                available_car_status["message"])
+            dispatcher.utter_message(json_message={
+                "query": response.query,
+                "reply": response.reply,
+                "action": response.action.as_dict(),
+                "data": response.data
+            })
         return True
         # else:
         # return False

@@ -4,7 +4,7 @@ from enums.custom_event_type import CustomEventType
 from model.custom_event_model import CustomEventModel
 
 from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, ActiveLoop
 from rasa_sdk.executor import CollectingDispatcher
 
 from enums.car_selection.car_selection import CarSelection
@@ -50,17 +50,18 @@ class ActionCarSelection(Action):
             nav_to_car_selection_screen(dispatcher, message, intent, entities)
         elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
             # if the user is on car selection screen, select the car
-            self.select_car(dispatcher, metadata, car_name, message, intent, entities)
+            self.select_car(dispatcher, metadata, car_name, message, intent)
+            return [ActiveLoop(None), SlotSet('car_number', None)]
         else:
             print(f"{self.name()}: user is not on dashboard and also not on car selection screen... ")
             dispatcher.utter_message(text="Something went wrong! Please try again!")
-        # else:
+            return [ActiveLoop(None), SlotSet('car_number', None)]
+    # else:
         #     print(f" {self.name()}: {metadata['type']} is not CAR_SELECTION")
         #     dispatcher.utter_message(text="Something went wrong! Please try again!")
         return [SlotSet("car_name", None)]
 
-    def select_car(self, dispatcher: CollectingDispatcher, metadata, car_name: str, message: str, intent: str,
-                   entities: json) -> None:
+    def select_car(self, dispatcher: CollectingDispatcher, metadata, car_name: str, message: str, intent: str):
         cars = metadata["car_selection_metadata"]["cars"]
         if car_name in cars:
             response = ResponseModel(
@@ -79,6 +80,6 @@ class ActionCarSelection(Action):
                 json_message={"query": response.query, "reply": response.reply, "action": response.action.as_dict(),
                               "data": response.data}
             )
-        else:
-            print(f"{self.name()} {car_name} not found in the car list")
-            dispatcher.utter_message(text=f"{car_name} not found in the list,  Something went wrong! Please try again!")
+        print(f"{self.name()} {car_name} not found in the car list")
+        dispatcher.utter_message(text=f"{car_name} not found in the list,  Something went wrong! Please try again!")
+

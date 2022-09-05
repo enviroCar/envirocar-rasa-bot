@@ -15,6 +15,6 @@ class ActionModel:
 
     def as_dict(self):
         return {'custom_event': self.custom_event,
-                'next-action': self.next_action,
+                'next_action': self.next_action,
                 'activity_class_name': self.activity_class_name,
                 'activity_extras': self.activity_extras}
