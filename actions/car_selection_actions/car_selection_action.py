@@ -81,4 +81,4 @@ class ActionCarSelection(Action):
             )
         else:
             print(f"{self.name()} {car_name} not found in the car list")
-            dispatcher.utter_message(text="Something went wrong! Please try again!")
+            dispatcher.utter_message(text=f"{car_name} not found in the list,  Something went wrong! Please try again!")

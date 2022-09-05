@@ -62,12 +62,12 @@ class ActionAskCarNumber(Action):
                     "action": response.action.as_dict(),
                     "data": response.data
                 })
-        else:
+        # else:
             # return a message and deactive the form
-            print(f"{self.name()}: {metadata['type']} is not CAR_SELECTION")
-            dispatcher.utter_message(
-                text="Something went wrong! Please try again!")
-            return [ActiveLoop(None), SlotSet('car_number', None)]
+            # print(f"{self.name()}: {metadata['type']} is not CAR_SELECTION")
+            # dispatcher.utter_message(
+            #     text="Something went wrong! Please try again!")
+            # return [ActiveLoop(None), SlotSet('car_number', None)]
         # else:
         #     # return a message and deactive the form
         #     print(f"{self.name()}: {metadata['type']} is not CAR_SELECTION")

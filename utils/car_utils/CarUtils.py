@@ -146,7 +146,7 @@ class CarUtils:
         # else:
         # return False
 
-    def return_response(reply: str):
+    def return_response(self, reply: str):
         response = ResponseModel(
             query="",
             reply=reply,
