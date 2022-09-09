@@ -12,7 +12,6 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from model.action_model import ActionModel
-from enums.recording.metadata_type import MetadataType
 from enums.recording.bluetooth import Bluetooth
 from enums.recording.car import Car
 from enums.recording.gps import GPS
@@ -189,7 +188,7 @@ def start_recording(dispatcher: CollectingDispatcher, message: str, intent: str,
             ).as_dict(),
             next_action=NextAction.STANDBY.value
         ),
-        data={"intent": intent, }
+        data={"intent": intent}
     )
 
     dispatcher.utter_message(json_message={

@@ -41,7 +41,6 @@ class ActionFollowup(Action):
         print("slotss:", slots)
 
         recording_start_query = slots["recording_start_query"]
-        recording_stop_query = slots["recording_stop_query"]
         location_permission = slots["location_permission"]
         is_dashboard_fragment = slots["is_dashboard_fragment"]
         gps = slots["gps"]

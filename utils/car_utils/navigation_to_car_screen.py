@@ -1,4 +1,3 @@
-import json
 from enums.custom_event_type import CustomEventType
 from model.custom_event_model import CustomEventModel
 
@@ -10,7 +9,7 @@ from model.next_action import NextAction
 from model.response_model import ResponseModel
 
 
-def nav_to_car_selection_screen(dispatcher: CollectingDispatcher, message: str, intent: str, entities: json) -> None:
+def nav_to_car_selection_screen(dispatcher: CollectingDispatcher, message: str, intent: str) -> None:
     response = ResponseModel(
         query=message,
         reply="You are not on car selection screen, navigating to car selection screen. Please ask for car selection again",

@@ -79,8 +79,6 @@ class ValidateCarSelectionForm(FormValidationAction):
                 return {"car_number": None, "next_car": True, "previous_car": False,
                         "select_car_iteration": return_select_car_iteration}
             if slot_value.lower() == "previous" and select_car_iteration == 0:
-                dispatcher.utter_message(
-                    text="You are on the first list, you can't go previous")
                 response = car_utils.return_response(available_message)
                 dispatcher.utter_message(json_message={
                     "query": response.query,
@@ -141,7 +139,7 @@ class ValidateCarSelectionForm(FormValidationAction):
                 cars=cars, car_index=car_index)
             available_cars = available_car_status["cars"]
 
-        # TODO: new function-> reset only car selection related slots
+        # TODO: new function -> reset only car selection related slots
         if slot_value == "third" and len(available_cars) >= 3:
             # dispatcher.utter_message(text=f"{available_cars[2]} car is available")
             return {"car_number": "third", "car_name": available_cars[2]}

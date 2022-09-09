@@ -2,7 +2,7 @@ from enums.recording.metadata_type import MetadataType
 from model.action_model import ActionModel
 from model.next_action import NextAction
 from model.response_model import ResponseModel
-from utils.car_utils.navigation_to_screen import nav_to_car_selection_screen
+from utils.car_utils.navigation_to_car_screen import nav_to_car_selection_screen
 
 
 class CarUtils:
@@ -129,7 +129,7 @@ class CarUtils:
         if metadata["isDashboardFragment"] and \
                 not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
             # if the user is on dashboard fragment, then navigate them to car selection screen
-            nav_to_car_selection_screen(dispatcher, message, intent, entities)
+            nav_to_car_selection_screen(dispatcher, message, intent)
         elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
             # if the user is on car selection screen, start the form
             select_car_iteration = tracker.get_slot("select_car_iteration")

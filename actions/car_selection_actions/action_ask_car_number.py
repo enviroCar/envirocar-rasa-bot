@@ -7,7 +7,7 @@ from rasa_sdk import Action
 
 from enums.recording.metadata_type import MetadataType
 from utils.car_utils.CarUtils import CarUtils
-from utils.car_utils.navigation_to_screen import nav_to_car_selection_screen
+from utils.car_utils.navigation_to_car_screen import nav_to_car_selection_screen
 
 
 class ActionAskCarNumber(Action):
@@ -44,7 +44,7 @@ class ActionAskCarNumber(Action):
                     not metadata["car_selection_metadata"]["is_car_selection_fragment"]:
                 # if the user is on dashboard fragment, then navigate them to car selection screen
                 nav_to_car_selection_screen(
-                    dispatcher, message, intent, entities)
+                    dispatcher, message, intent)
                 return [ActiveLoop(None), SlotSet('car_number', None)]
             elif metadata["car_selection_metadata"]["is_car_selection_fragment"]:
                     # if the user is on car selection screen, start the form

@@ -75,11 +75,6 @@ slots:
     influence_conversation: true
     mappings:
       - type: custom
-  recording_stop_query:
-    type: bool
-    influence_conversation: true
-    mappings:
-      - type: custom
   car_number:
     type: text
     influence_conversation: true
