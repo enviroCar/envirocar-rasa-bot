@@ -136,8 +136,6 @@ class CarUtils:
                 "data": response.data
             })
         return True
-        # else:
-        # return False
 
     def return_response(self, reply: str):
         response = ResponseModel(

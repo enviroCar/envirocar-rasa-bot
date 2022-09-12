@@ -140,7 +140,7 @@ class ValidateCarSelectionForm(FormValidationAction):
                     "action": response.action.as_dict(),
                     "data": response.data
                 })
-                return {"car_number": None}
+                return {"car_number": None, "car_verification": None}
             elif slot_value == "yes":
                 return {"car_verification": slot_value}
 
