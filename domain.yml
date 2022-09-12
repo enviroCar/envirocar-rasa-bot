@@ -21,6 +21,7 @@ actions:
   - action_ask_car_number
   - action_detailed_car_selection
   - validate_car_selection_form
+  - action_ask_car_verification
   - action_car_selection
   - action_followup
 
@@ -28,6 +29,7 @@ forms:
   car_selection_form:
     required_slots:
       - car_number
+      - car_verification
 
 slots:
   is_dashboard_fragment:
@@ -118,6 +120,19 @@ slots:
         conditions:
           - active_loop: car_selection_form
             requested_slot: previous_car
+  car_verification:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: yes
+        intent: affirm
+      - type: from_intent
+        value: no
+        intent: deny
+        conditions:
+          - active_loop: car_selection_form
+            requested_slot: car_verification
 responses:
   utter_greet:
     - text: Hey! How are you?

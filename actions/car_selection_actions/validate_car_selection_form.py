@@ -4,7 +4,6 @@ from rasa_sdk import Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 
-from enums.recording.metadata_type import MetadataType
 from utils.car_utils.CarUtils import CarUtils
 
 ALLOWED_CAR_NUMBER = ["first", "second", "third", "next", "previous"]
@@ -106,10 +105,51 @@ class ValidateCarSelectionForm(FormValidationAction):
                                                car_utils, next_car, previous_car, next_index)
         return {}
 
+    @staticmethod
+    def validate_car_verification(
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `car_number` value."""
+
+        print("Slot Value", slot_value)
+        intent = None
+        try:
+            intent = tracker.latest_message['intent'].get('name')
+        except KeyError:
+            print(f"No intent, something went wrong, error:{Exception}")
+
+        select_car_iteration = tracker.get_slot("select_car_iteration")
+        metadata = tracker.latest_message.get("metadata")
+
+        if metadata["car_selection_metadata"]["is_car_selection_fragment"]:
+            if slot_value == "no":
+                cars = metadata["car_selection_metadata"]["cars"]
+                car_utils = CarUtils()
+                car_index = car_utils.get_car_index(
+                    select_car_iteration=select_car_iteration)
+                available_car_status = car_utils.get_available_car_status(
+                    cars=cars, car_index=car_index)
+                available_message = available_car_status["message"]
+                response = car_utils.return_response(available_message)
+                dispatcher.utter_message(json_message={
+                    "query": response.query,
+                    "reply": response.reply,
+                    "action": response.action.as_dict(),
+                    "data": response.data
+                })
+                return {"car_number": None}
+            elif slot_value == "yes":
+                return {"car_verification": slot_value}
+
+        return {}
+
     def validate_car_selection(self, dispatcher: CollectingDispatcher, slot_value: str, cars: list,
                                select_car_iteration: int,
                                car_utils: CarUtils, next_car: bool, previous_car: bool, next_car_index: int) -> Dict[
-            Text, Any]:
+        Text, Any]:
         car_index = car_utils.get_car_index(
             select_car_iteration=select_car_iteration)
         available_car_status = car_utils.get_available_car_status(

@@ -64,53 +64,39 @@ class CarUtils:
         if len(available_cars) == 3:
             return {
                 "index": 3,
-                "message": f"""
-                    In the next list, say first to select {available_cars[0]} say second to select {available_cars[1]} and say third to select {available_cars[2]}, if your car is not in this list say next to select from next list or say previous to select from the previous list.
-                """
+                "message": f"""In the next list, say first to select {available_cars[0]} say second to select {available_cars[1]} and say third to select {available_cars[2]}, if your car is not in this list say next to select from next list or say previous to select from the previous list."""
             }
 
         if len(available_cars) == 2:
             return {
                 "index": 2,
-                "message": f"""
-                    In the next list, say first to select {available_cars[0]} and say second to select {available_cars[1]} if your car is not in this list say previous to select from the previous list.
-                """
+                "message": f"""In the next list, say first to select {available_cars[0]} and say second to select {available_cars[1]} if your car is not in this list say previous to select from the previous list."""
             }
         if len(available_cars) == 1:
             return {
                 "index": 1,
-                "message": f"""
-                    There is only one car in the next list, that is {available_cars[0]} say first to select it. if your car is not in this list say previous to select from the previous list.
-                """
+                "message": f"""There is only one car in the next list, that is {available_cars[0]} say first to select it. if your car is not in this list say previous to select from the previous list."""
 
             }
         return {
             "index": 0,
-            "message": """
-                There are no cars left, say previous to select from the previous list.
-            """
+            "message": """There are no cars left, say previous to select from the previous list."""
         }
 
     @staticmethod
     def _get_utter_message(available_cars: list):
         if len(available_cars) == 3:
             return (
-                f"""
-                    there are 3 cars, say first to select {available_cars[0]}, and say second to select {available_cars[1]} and say third to select {available_cars[2]}, if your car is not in this list say next to select from the next list or say previous to select from the previous list.
-                """
+                f"""There are 3 cars, say first to select {available_cars[0]}, and say second to select {available_cars[1]} and say third to select {available_cars[2]}, if your car is not in this list say next to select from the next list or say previous to select from the previous list."""
             )
 
         if len(available_cars) == 2:
             return (
-                f"""
-                    there are 2 cars, say first to select {available_cars[0]}, and say second to select {available_cars[1]}, if your car is not in this list say next to select from the next list or say previous to select from the previous list.
-                """
+                f"""there are 2 cars, say first to select {available_cars[0]}, and say second to select {available_cars[1]}, if your car is not in this list say next to select from the next list or say previous to select from the previous list."""
             )
         if len(available_cars) == 1:
             return (
-                f"""
-                    there is only 1 car, say first to select {available_cars[0]}.
-                """
+                f"""There is only 1 car, say first to select {available_cars[0]}."""
             )
             # TODO OR
             #  """
