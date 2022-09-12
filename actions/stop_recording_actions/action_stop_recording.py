@@ -34,29 +34,39 @@ class ActionStopRecording(Action):
         # if the metadata type is recording and user is on dashboard fragment,
         # TODO - get an object for all required start recording slots
         # if metadata["type"] == MetadataType.RECORDING.value:
-        if metadata["recordingMetadata"]["is_recording_screen"] and not metadata["isDashboardFragment"]:
-            # if the user is on recording screen, then check if recording is currently going on
-            if metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_RUNNING.value:
-                # if recording is currently going on, then stop the recording
+
+        # if no recording running, then just utter message and return
+        if metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_RUNNING.value:
+            if metadata["recordingMetadata"]["is_recording_screen"] and not metadata["isDashboardFragment"]:
+                # if the user is on recording screen, then check if recording is currently going on
+                if metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_RUNNING.value:
+                    # if recording is currently going on, then stop the recording
+                    stop_recording(dispatcher, message, intent)
+                    return []
+
+                elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_STOPPED.value:
+                    dispatcher.utter_message(
+                        text="There is currently no Recording going on")
+                    return []
+                elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_INIT.value:
+                    dispatcher.utter_message(
+                        text="There is currently no Recording going on")
+                    return []
+                else:
+                    print(f"{self.name()}: Wrong recording state other than init, running or stopped")
+                    dispatcher.utter_message(
+                        text="Wrong Recording state, Something went wrong!")
+                    return []
+            else:
+                nav_to_recording_screen(dispatcher, message,
+                                        reply="You are not on recording screen, navigating to recording screen and stopping the track",
+                                        intent=intent)
                 stop_recording(dispatcher, message, intent)
                 return []
-
-            elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_STOPPED.value:
-                dispatcher.utter_message(
-                    text="There is currently no Recording going on")
-                return []
-            elif metadata["recordingMetadata"]["recording_status"] == RecordingState.RECORDING_INIT.value:
-                dispatcher.utter_message(
-                    text="There is currently no Recording going on")
-                return []
-            else:
-                print(f"{self.name()}: Wrong recording state other than init, running or stopped")
-                dispatcher.utter_message(
-                    text="Wrong Recording state, Something went wrong!")
-                return []
         else:
-            nav_to_recording_screen(dispatcher, message, intent)
-            stop_recording(dispatcher, message, intent)
+            print(f"{self.name()}: No Recording going on!")
+            dispatcher.utter_message(
+                text="There is currently no Recording going on")
             return []
 
 

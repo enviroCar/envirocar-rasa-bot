@@ -13,12 +13,12 @@ from model.response_model import ResponseModel
 
 
 
-def nav_to_recording_screen(dispatcher: CollectingDispatcher, message: str, intent: str) -> None:
+def nav_to_recording_screen(dispatcher: CollectingDispatcher, message: str, reply: str, intent: str) -> None:
     response = ResponseModel(
         query=message,
-        reply="You are not on recording screen, navigating to recording screen. Please ask for stop recording again",
+        reply=reply,
         action=ActionModel(
-            activity_class_name="org.envirocar.app.views.carselection.CarSelectionActivity",
+            activity_class_name="org.envirocar.app.views.recordingscreen.RecordingScreenActivity",
             custom_event=CustomEventModel(
                 type=CustomEventType.NavigationScreens.value,
                 name=NavigationScreens.RECORDING.value
