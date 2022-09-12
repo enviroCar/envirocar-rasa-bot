@@ -19,4 +19,4 @@ RUN pip install rasa==3.2.5
 ADD config.yml config.yml
 ADD domain.yml domain.yml
 ADD credentials.yml credentials.yml
-ADD endpoints.yml endpoints.yml
+ADD docker-endpoints.yml endpoints.yml
