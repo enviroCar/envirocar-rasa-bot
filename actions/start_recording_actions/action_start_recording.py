@@ -158,14 +158,14 @@ class ActionStartRecording(Action):
                         text="Wrong Recording state, Something went wrong!")
                     return [SlotSet("recording_start_query", False)]
             else:
-                reply = "Recording is already running! Navigating to recording screen"
+                reply = "User is not on dashboard screen, Please navigate to Dashboard screen and ask start recording again."
                 nav_to_recording_screen(dispatcher, message, reply,  intent)
                 return [SlotSet("recording_start_query", False)]
         else:
-            print(f"{self.name()}: No Recording going on!")
-            dispatcher.utter_message(
-                text="There is currently no Recording going on")
-            return []
+            print(f"{self.name()}: Recording already going on!")
+            reply = "Recording is already running! Navigating to recording screen"
+            nav_to_recording_screen(dispatcher, message, reply,  intent)
+            return [SlotSet("recording_start_query", False)]
         # else:
         #     print(f" {self.name()}: {metadata['type']} is not RECORDING")
         #     dispatcher.utter_message(

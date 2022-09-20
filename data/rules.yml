@@ -13,6 +13,8 @@ rules:
       - action: utter_iamabot
 
   - rule: Run a followup start action anytime the user affirms
+    condition:
+      - active_loop: null
     steps:
       - intent: affirm
       - action: action_followup
@@ -52,4 +54,12 @@ rules:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
+      - action: action_car_selection
+
+  - rule: Select a car whenever user affirms in car selection form
+    condition:
+      - active_loop: car_selection_form
+    steps:
+      - slot_was_set:
+          - car_verification: yes
       - action: action_car_selection
