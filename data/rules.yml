@@ -63,3 +63,8 @@ rules:
       - slot_was_set:
           - car_verification: yes
       - action: action_car_selection
+
+  - rule: Run `cancel_commands` action whenever `overall_cancel_command` intent is triggered
+    steps:
+      - intent: overall_cancel_command
+      - action: action_cancel_commands
