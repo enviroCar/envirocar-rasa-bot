@@ -6,3 +6,4 @@ Pipfile.lock
 story_graph.dot
 
 endpoints.yml
+results/

@@ -24,6 +24,7 @@ actions:
   - action_ask_car_verification
   - action_car_selection
   - action_followup
+  - action_cancel_commands
 
 forms:
   car_selection_form:
@@ -88,7 +89,6 @@ slots:
             requested_slot: car_number
   car_name:
     type: text
-    influence_conversation: true
     mappings:
       - type: custom
         conditions:
@@ -106,7 +106,6 @@ slots:
             requested_slot: select_car_iteration
   next_car:
     type: bool
-    influence_conversation: true
     mappings:
       - type: custom
         conditions:
@@ -114,7 +113,6 @@ slots:
             requested_slot: next_car
   previous_car:
     type: bool
-    influence_conversation: true
     mappings:
       - type: custom
         conditions:
