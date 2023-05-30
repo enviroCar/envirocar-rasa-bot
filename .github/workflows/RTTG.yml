@@ -19,7 +19,6 @@ jobs:
         id: action
         uses: RasaHQ/rasa-train-test-gha@main
         with:
-          cross_validation: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Output Test Report
         run: |
