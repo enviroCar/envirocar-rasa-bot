@@ -10,7 +10,7 @@ jobs:
   training-testing:
     name: Rasa Training and Testing GHA
     runs-on: ubuntu-latest
-    permissions: read-all|write-all
+    permissions: write-all
     steps:
       - name: GitHub Checkout PR
         uses: actions/checkout@v3
