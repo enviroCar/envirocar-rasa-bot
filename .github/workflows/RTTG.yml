@@ -1,7 +1,7 @@
 name: Rasa Train Test Workflow
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - reopened
@@ -10,7 +10,6 @@ jobs:
   training-testing:
     name: Rasa Training and Testing GHA
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - name: GitHub Checkout PR
         uses: actions/checkout@v3
@@ -18,7 +17,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: RTTG Action Step
         id: action
-        uses: RasaHQ/rasa-train-test-gha@main
+        uses: devAyushDubey/rasa-train-test-gha-enviroCar@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Output Test Report
