@@ -30,6 +30,10 @@ forms:
     required_slots:
       - car_number
       - car_verification
+      - car_name
+      - select_car_iteration
+      - next_car
+      - previous_car
 
 slots:
   is_dashboard_fragment:
