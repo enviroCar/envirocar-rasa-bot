@@ -1,4 +1,4 @@
-FROM python:3.7.7-stretch AS BASE
+FROM python:3.7.7-slim AS BASE
 
 RUN apt-get update \
     && apt-get --assume-yes --no-install-recommends install \
