@@ -65,6 +65,12 @@ class ActionAskCarNumber(Action):
                         "action": response.action.as_dict(),
                         "data": response.data
                     })
+            else:
+                # return a message and deactive the form
+                print(f"{self.name()}: User is not on car selection or dashboard screen")
+                dispatcher.utter_message(
+                    text="User is not on car selection or dashboard screen")
+                return [ActiveLoop(None), SlotSet('car_number', None)]
         # else:
             # return a message and deactive the form
             # print(f"{self.name()}: {metadata['type']} is not CAR_SELECTION")

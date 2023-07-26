@@ -53,7 +53,7 @@ class ValidateCarSelectionForm(FormValidationAction):
             # if s
             if slot_value.lower() not in ALLOWED_CAR_NUMBER:
                 response = car_utils.return_response(
-                    "Please specify a correct number that is one, two or three")
+                    "Please specify a correct number that is first, second, or third")
                 dispatcher.utter_message(json_message={
                     "query": response.query,
                     "reply": response.reply,
@@ -78,7 +78,7 @@ class ValidateCarSelectionForm(FormValidationAction):
                 return {"car_number": None, "next_car": True, "previous_car": False,
                         "select_car_iteration": return_select_car_iteration}
             if slot_value.lower() == "previous" and select_car_iteration == 0:
-                response = car_utils.return_response(available_message)
+                response = car_utils.return_response("You are on the first list, you can't go previous")
                 dispatcher.utter_message(json_message={
                     "query": response.query,
                     "reply": response.reply,
@@ -115,11 +115,6 @@ class ValidateCarSelectionForm(FormValidationAction):
         """Validate `car_number` value."""
 
         print("Slot Value", slot_value)
-        intent = None
-        try:
-            intent = tracker.latest_message['intent'].get('name')
-        except KeyError:
-            print(f"No intent, something went wrong, error:{Exception}")
 
         select_car_iteration = tracker.get_slot("select_car_iteration")
         metadata = tracker.latest_message.get("metadata")
@@ -136,7 +131,7 @@ class ValidateCarSelectionForm(FormValidationAction):
                 response = car_utils.return_response(available_message)
                 dispatcher.utter_message(json_message={
                     "query": response.query,
-                    "reply": response.reply,
+                    "reply": f"Okay reverting the last decision, {response.reply}",
                     "action": response.action.as_dict(),
                     "data": response.data
                 })
@@ -181,13 +176,10 @@ class ValidateCarSelectionForm(FormValidationAction):
 
         # TODO: new function -> reset only car selection related slots
         if slot_value == "third" and len(available_cars) >= 3:
-            # dispatcher.utter_message(text=f"{available_cars[2]} car is available")
             return {"car_number": "third", "car_name": available_cars[2]}
         if slot_value == "second" and len(available_cars) >= 2:
-            # dispatcher.utter_message(text=f"{available_cars[1]} car is available")
             return {"car_number": "second", "car_name": available_cars[1]}
         if slot_value == "first" and len(available_cars) >= 1:
-            # dispatcher.utter_message(text=f"{available_cars[0]} car is available")
             return {"car_number": "first", "car_name": available_cars[0]}
 
         print(f"{self.name()}: Something went wrong with validating car selection and assigning 'car_name' slot.")

@@ -175,6 +175,20 @@ nlu:
       - choose [second](car_selection_number) car
       - choose [third](car_selection_number) car please
 
+  - intent: overall_cancel_command
+    examples: |
+      - cancel
+      - cancel it
+      - cancel everything
+      - cancel all
+      - cancel start recording
+      - cancel stop recording
+      - cancel select car
+      - cancel choose car
+      - can you cancel this
+      - please cancel command
+      - enviroBot cancel this
+
   - synonym: select
     examples: |
       - select
