@@ -6,6 +6,8 @@ nlu:
       - hey
       - hello
       - hi
+      - hi there
+      - hiya
       - hello there
       - good morning
       - good evening
@@ -38,30 +40,40 @@ nlu:
       - yep
       - yup
       - do it
+      - all right
+      - definitely
+      - sounds good
 
   - intent: deny
     examples: |
       - no
       - n
+      - nah
       - never
       - I don't think so
       - don't like that
       - no way
       - not really
+      - not at all
 
   - intent: mood_great
     examples: |
       - perfect
       - great
       - amazing
+      - awesome
+      - alright
       - feeling like a king
       - wonderful
       - I am feeling very good
+      - I am feeling fabulous
       - I am great
       - I am amazing
       - I am going to save the world
+      - I am doing well
       - super stoked
       - extremely good
+      - good enough
       - so so perfect
       - so good
       - so perfect
@@ -70,11 +82,15 @@ nlu:
     examples: |
       - my day was horrible
       - I am sad
+      - I am feeling down
+      - I am feeling low
       - I don't feel very well
       - I am disappointed
       - super sad
       - I'm so sad
+      - anxious
       - sad
+      - upset
       - very sad
       - unhappy
       - not good
@@ -95,8 +111,10 @@ nlu:
       - I want to [start](recording_start_action) recording
       - recording
       - can you [start](recording_start_action) recording
+      - can you [activate](recording_start_action) recording
       - [set up](recording_start_action) record
       - can you [stop](recording_stop_action) recording
+      - [cancel](recording_stop_action) recording
       - [close](recording_stop_action) recording
 
   - lookup: recording_start_action
@@ -105,6 +123,8 @@ nlu:
       - begin
       - set up
       - launch
+      - activate
+      - initiate
 
   - lookup: recording_stop_action
     examples: |
@@ -115,6 +135,7 @@ nlu:
       - close
       - shut
       - shutdown
+      - cancel
 
   - intent: select_car
     examples: |

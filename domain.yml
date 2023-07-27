@@ -148,9 +148,9 @@ responses:
   utter_iamabot:
     - text: I am a bot, powered by Rasa.
   utter_did_that_help:
-    - text: did that help?
+    - text: Did that help?
   utter_unspecified_recording_action:
-    - text: please specify recording action, e.g. to start say "start recording" or to stop track say "stop recording".
+    - text: Please specify the recording action. For example, say "start recording" to begin the recording or "stop recording" to end the track.
   utter_envirocar_info:
     - text: enviroCar Mobile is an Android application for collecting Extended Floating Car Data on smartphones. You can upload tracks to the enviroCar server, where the data is available for further analysis and use under the ODbL license. The data is also available on the enviroCar website for viewing and analysis.
 #  utter_custom_response:
